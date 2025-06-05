@@ -6,4 +6,9 @@ public partial class Registro : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private async void VolverAlLogin_btn(object sender,EventArgs e)
+    {
+		await Shell.Current.GoToAsync("..");
+    }
 }
