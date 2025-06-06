@@ -79,7 +79,8 @@
                     VerticalOptions="Center"/>
 
                 <CheckBox
-                    x:Name="ShowPasswordCheckBox"
+                    x:Name="ShowPasswordCheckBox_Registro"
+                    CheckedChanged="OnShowPasswordCheckBox_Registro"
                     VerticalOptions="Center"/>
             </StackLayout>
 

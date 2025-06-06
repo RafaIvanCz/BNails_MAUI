@@ -11,4 +11,9 @@ public partial class Login : ContentPage
     {
 		await Shell.Current.GoToAsync(nameof(Registro));
     }
+
+    private void OnShowPasswordCheckBox(object sender,CheckedChangedEventArgs e)
+    {
+        txtPasswordLogin.IsPassword = !e.Value;
+    }
 }

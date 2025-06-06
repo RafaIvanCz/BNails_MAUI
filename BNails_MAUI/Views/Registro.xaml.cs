@@ -11,4 +11,10 @@ public partial class Registro : ContentPage
     {
 		await Shell.Current.GoToAsync("..");
     }
+
+    private void OnShowPasswordCheckBox_Registro(object sender,CheckedChangedEventArgs e)
+    {
+        txtPasswordRegistro.IsPassword = !e.Value;
+        txtRePassword.IsPassword = !e.Value;
+    }
 }
