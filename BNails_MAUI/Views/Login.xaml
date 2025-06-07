@@ -42,6 +42,20 @@
                     PlaceholderColor="{StaticResource Gray900}" />
             </Border>
 
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Start">
+                <Label
+                    Text="Olvidé mi contraseña"
+                    TextColor="{ StaticResource DarkRedColor }"
+                    CharacterSpacing="2"
+                    Style="{StaticResource SubHeadline}"
+                    FontSize="16"
+                    FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapResetPwd_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
             <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
                 <Label
                     Text="Mostrar contraseña"
@@ -57,6 +71,7 @@
                     x:Name="ShowPasswordCheckBox"
                     CheckedChanged="OnShowPasswordCheckBox"
                     VerticalOptions="Center"/>
+                
             </StackLayout>
 
             <Button
@@ -66,7 +81,7 @@
                 FontAttributes="Bold"
                 BackgroundColor="DarkBlue"
                 TextColor="White"
-                Margin="0,30,0,30"
+                Margin="0,10,0,30"
                 HorizontalOptions="Center"
                 WidthRequest="300"/>
 

@@ -16,4 +16,9 @@ public partial class Login : ContentPage
     {
         txtPasswordLogin.IsPassword = !e.Value;
     }
+
+    private async void TapResetPwd_Tapped(object sender,TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(ResetPwd));
+    }
 }
