@@ -6,4 +6,9 @@ public partial class ResetPwd : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private async void VolverLogin_Tapped(object sender,TappedEventArgs e)
+    {
+		await Shell.Current.GoToAsync("..");
+    }
 }

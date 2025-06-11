@@ -7,65 +7,43 @@
 
     <ScrollView HorizontalOptions="Center">
 
-        <VerticalStackLayout
-            Spacing="25"
-            MaximumWidthRequest="400"
-            HorizontalOptions="Center">
+        <VerticalStackLayout Spacing="25" MaximumWidthRequest="400" HorizontalOptions="Center">
 
-            <!--<Image
-                Source="esmalte.png"
-                HeightRequest="130"
-                Aspect="AspectFit"
-                Margin="0,10,0,40"
-                SemanticProperties.Description="dot net bot in a hovercraft number nine" />-->
-            
             <Label 
                 Text="Registrate"
-                TextColor="DarkBlue"
-                Style="{StaticResource Headline}"
-                FontAttributes="Bold"
                 Margin="0,120,0,25"
-                HorizontalOptions="Center"
-                SemanticProperties.HeadingLevel="Level1"/>
-
-            <Border WidthRequest="300" StrokeThickness="0">
+                Style="{ StaticResource LabelHeaderInicio }"/>
+            
                 <Entry
                     x:Name="txtNombre"
                     Placeholder="Ingresa tu nombre"
                     PlaceholderColor="{StaticResource Gray900}" />
-            </Border>
-
-            <Border WidthRequest="300" StrokeThickness="0">
+                
                 <Entry
                     x:Name="txtEmailRegistro"
                     Placeholder="Ingresa tu correo electrónico"
                     Keyboard="Email"
                     PlaceholderColor="{StaticResource Gray900}" />
-            </Border>
-
-            <Border WidthRequest="300" StrokeThickness="0">
+                
                 <Entry
                     x:Name="txtPasswordRegistro"
                     Placeholder="Ingresa la contraseña"
                     IsPassword="True"
                     PlaceholderColor="{StaticResource Gray900}" />
-            </Border>
 
-            <StackLayout x:Name="ValidacionesPassword" Margin="0,-20,0,0" IsVisible="False">
+                <StackLayout x:Name="ValidacionesPassword" Margin="0,-20,0,0" IsVisible="False">
                 <Label x:Name="lblMinCaracteres" Text="❌ Mínimo 8 caracteres" TextColor="Red" />
                 <Label x:Name="lblMayuscula" Text="❌ Al menos una mayúscula" TextColor="Red" />
                 <Label x:Name="lblNumero" Text="❌ Al menos un número" TextColor="Red" />
             </StackLayout>
-
-            <Border WidthRequest="300" StrokeThickness="0">
+            
                 <Entry
                     x:Name="txtRePassword"
                     Placeholder="Ingresa de nuevo la contraseña"
                     IsPassword="True"
                     PlaceholderColor="{StaticResource Gray900}" />
-            </Border>
 
-            <Label x:Name="lblRePassword" Text="Las contraseñas deben ser iguales" TextColor="Red" Margin="0,-20,0,0" IsVisible="False" />
+                <Label x:Name="lblRePassword" Text="Las contraseñas deben ser iguales" TextColor="Red" Margin="0,-20,0,0" IsVisible="False" />
 
             <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
                 <Label
@@ -86,23 +64,21 @@
 
             <Button
                 Text="Registrarme"
-                CharacterSpacing="3"
+                CharacterSpacing="2"
                 FontAttributes="Bold"
                 BackgroundColor="DarkBlue"
+                FontSize="Subtitle"
                 TextColor="White"
                 WidthRequest="300"
                 Margin="0, 30, 0, 20"/>
 
-            <Button
-                Text="Volver al Login"
-                Clicked="VolverAlLogin_btn"
-                CharacterSpacing="1"
-                FontAttributes="Bold"
-                BackgroundColor="Transparent"
-                FontSize="16"
-                TextColor="{ StaticResource DarkRedColor }"
-                HorizontalOptions="Start"
-                WidthRequest="300"/>
+            <Label
+                Text="Volver al Inicio de Sesión"
+                Style="{ StaticResource LabelInicio }">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VolverLogin_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
 
         </VerticalStackLayout>
     </ScrollView>
