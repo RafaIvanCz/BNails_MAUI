@@ -2,11 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BNails_MAUI.Views.ResetPwd"
+             Shell.NavBarIsVisible="False"
              Title="ResetPwd">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <ScrollView HorizontalOptions="Center">
+        
+        <VerticalStackLayout Padding="20" Spacing="10" VerticalOptions="Center" HorizontalOptions="Center">
+            <Label 
+                Text="Recuperar contraseña"
+                Margin="0,0,0,55"
+                Style="{ StaticResource LabelHeaderInicio }" />
+            <Entry 
+                Placeholder="Ingresá tu correo electrónico"
+                PlaceholderColor="{ StaticResource Gray900 }"
+                Keyboard="Email"
+                Margin="0,10,0,0" />
+            <Button 
+                Text="Continuar"
+                Margin="0,30,0,50"
+                Style="{ StaticResource BotonesInicio }" />
+            <Label
+                Text="Volver al Inicio de Sesión"
+                Style="{ StaticResource LabelInicio }">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VolverLogin_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
 </ContentPage>
