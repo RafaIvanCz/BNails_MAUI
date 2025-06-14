@@ -40,7 +40,7 @@
                     FontSize="14"
                     FontAttributes="Bold">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapResetPwd_Tapped"/>
+                        <TapGestureRecognizer Tapped="ResetPwd_Tapped"/>
                     </Label.GestureRecognizers>
                 </Label>
             </StackLayout>
@@ -50,7 +50,6 @@
                     Text="Mostrar contraseña"
                     TextColor="DarkBlue"
                     CharacterSpacing="1"
-                    Margin="0, 0, 10, 0"
                     Style="{StaticResource SubHeadline}"
                     FontSize="16"
                     FontAttributes="Bold"
@@ -66,6 +65,7 @@
             <Button
                 x:Name="LoginBtn"
                 Text="Ingresar"
+                Clicked="OnLoginBtn_Clicked"
                 Style="{ StaticResource BotonesInicio }"/>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Start">

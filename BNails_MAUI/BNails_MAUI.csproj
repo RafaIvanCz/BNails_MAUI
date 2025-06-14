@@ -60,8 +60,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+		<PackageReference Include="MySql.Data" Version="9.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -86,6 +88,12 @@
 	  <MauiXaml Update="Views\Registro.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Models\" />
+	  <Folder Include="Interfaces\" />
+	  <Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>
