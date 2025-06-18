@@ -13,11 +13,11 @@ namespace BNails_MAUI.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private string email;
+        private string? email;
         private bool comenzoAEscribirEmail;
         private bool emailCorrecto;
 
-        public string Email
+        public string? Email
         {
             get => email;
             set
@@ -63,7 +63,7 @@ namespace BNails_MAUI.ViewModels
             }
         }
 
-        private bool MostrarFormatoEmail => ComenzoAEscribirEmail && !EmailCorrecto;
+        public bool MostrarFormatoEmail => ComenzoAEscribirEmail && !EmailCorrecto;
 
         private void ValidarEmail()
         {
