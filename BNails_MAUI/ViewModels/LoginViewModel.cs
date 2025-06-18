@@ -9,7 +9,7 @@ namespace BNails_MAUI.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
     }
 }

@@ -7,7 +7,7 @@ public partial class ResetPwd : ContentPage
 	public ResetPwd()
 	{
 		InitializeComponent();
-		BindingContext = new RegistroViewModel();
+		BindingContext = new ResetPwdViewModel();
     }
 
     private async void VolverLogin_Tapped(object sender,TappedEventArgs e)

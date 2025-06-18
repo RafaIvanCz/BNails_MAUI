@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BNails_MAUI.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,14 +11,16 @@ using System.Windows.Input;
 
 namespace BNails_MAUI.ViewModels
 {
-    class RegistroViewModel : INotifyPropertyChanged
+    public class RegistroViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private string nombre;
-        private string email;
-        private string password;
-        private string rePassword;
+        private readonly IDialogService dialogService;
+
+        private string? nombre;
+        private string? email;
+        private string? password;
+        private string? rePassword;
 
         private bool comenzoAEscribirEmail;
         private bool comenzoAEscribirPassword;
@@ -216,8 +219,9 @@ namespace BNails_MAUI.ViewModels
 
         public ICommand? RegistrarCommand { get; }
 
-        public RegistroViewModel()
+        public RegistroViewModel(IDialogService dialogService)
         {
+            this.dialogService = dialogService;
             RegistrarCommand = new Command(OnRegistrar);
         }
 
@@ -226,25 +230,25 @@ namespace BNails_MAUI.ViewModels
             if(string.IsNullOrWhiteSpace(Nombre) || string.IsNullOrWhiteSpace(Email) ||
                 string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(RePassword))
             {
-                await Application.Current.MainPage.DisplayAlert("Error","Completá todos los campos","OK");
+                await dialogService.MostrarAlertaAsync("Error","Completá todos los campos");
                 return;
             }
 
             if(!Regex.IsMatch(Email,@"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                await Application.Current.MainPage.DisplayAlert("Error","Correo inválido","OK");
+                await dialogService.MostrarAlertaAsync("Error","Correo inválido");
                 return;
             }
 
             if(!CumpleMinCaracteres || !TieneMayuscula || !TieneNumero)
             {
-                await Application.Current.MainPage.DisplayAlert("Error","Contraseña insegura","OK");
+                await dialogService.MostrarAlertaAsync("Error","Contraseña insegura");
                 return;
             }
 
             if(!CoincidenPasswords)
             {
-                await Application.Current.MainPage.DisplayAlert("Error","Las contraseñas no coinciden","OK");
+                await dialogService.MostrarAlertaAsync("Error","Las contraseñas no coinciden");
                 return;
             }
 
