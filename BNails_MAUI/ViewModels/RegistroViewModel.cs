@@ -1,4 +1,6 @@
 ﻿using BNails_MAUI.Interfaces;
+using BNails_MAUI.Models;
+using BNails_MAUI.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -249,12 +251,30 @@ namespace BNails_MAUI.ViewModels
             if(!CoincidenPasswords)
             {
                 await dialogService.MostrarAlertaAsync("Error","Las contraseñas no coinciden");
+                RePassword = string.Empty;
                 return;
             }
 
             string hashedPassword = Helpers.SeguridadHelper.HashPassword(Password);
 
-            // Acá llamás a tu servicio para guardar el usuario en la base
+            var usuario = new Usuario
+            {
+                Nombre = Nombre,
+                Email = Email,
+                Password = hashedPassword
+            };
+
+            var usuarioService = new UsuarioService();
+            bool registroExitoso = usuarioService.RegistrarUsuario(usuario);
+
+            if (registroExitoso)
+            {
+                await dialogService.MostrarAlertaAsync("Éxito", "Usuario guardado con éxito!");
+                await Shell.Current.GoToAsync("..");
+            } else
+            {
+                await dialogService.MostrarAlertaAsync("Error", "No se pudo guardar el usuario. Intente nuevamente.");
+            }
         }
 
         private void ValidarEmail()
