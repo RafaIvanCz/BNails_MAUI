@@ -9,13 +9,8 @@ namespace BNails_MAUI.Data
 {
     public class ConexionBD
     {
-        private const string conexionBD = "server=localhost;port=3306;database=bnails;user=root;password=root";
+        private const string conexionBD = "server=10.0.2.2;port=3306;database=bnails;user=root;password=root";
 
-        public static MySqlConnection ObtenerConexionBD()
-        {
-            var conexion = new MySqlConnection(conexionBD);
-            conexion.Open();
-            return conexion;
-        }
+        public static string ObtenerConexionBD() => conexionBD;
     }
 }

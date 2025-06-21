@@ -5,90 +5,102 @@
              Shell.NavBarIsVisible="False"
              Title="Login">
 
-    <ScrollView HorizontalOptions="Center">
-        <VerticalStackLayout Spacing="25" MaximumWidthRequest="400" HorizontalOptions="Center">
+    <Grid>
 
-            <!--<Image
-                    Source="esmalte.png"
-                    HeightRequest="130"
-                    Aspect="AspectFit"
-                    Margin="0,10,0,40"
-                    SemanticProperties.Description="dot net bot in a hovercraft number nine" />-->
+        <Image
+            Source="background2.jpeg"
+            Aspect="AspectFill"
+            Opacity="0.2"
+            IsVisible="True" />
 
-            <Label
-                Text="Iniciar sesión"
-                Margin="0,180,0,25"
-                Style="{ StaticResource LabelHeaderInicio }" />
+        <ScrollView HorizontalOptions="Center">
+            <VerticalStackLayout Spacing="25" MaximumWidthRequest="400" HorizontalOptions="Center">
 
-            <Entry
-                x:Name="txtEmailLogin"
-                BackgroundColor="Transparent"
-                Placeholder="Ingresa tu correo electrónico"
-                PlaceholderColor="{StaticResource Gray900}" />
-
-            <Entry
-                x:Name="txtPasswordLogin"
-                Placeholder="Ingresa tu contraseña"
-                IsPassword="True"
-                PlaceholderColor="{StaticResource Gray900}" />
-
-            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                <Label
-                    Text="Olvidé mi contraseña"
-                    TextColor="{ StaticResource DarkRedColor }"
-                    CharacterSpacing="1"
-                    FontSize="14"
-                    FontAttributes="Bold">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ResetPwd_Tapped"/>
-                    </Label.GestureRecognizers>
-                </Label>
-            </StackLayout>
-
-            <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
-                <Label
-                    Text="Mostrar contraseña"
-                    TextColor="DarkBlue"
-                    CharacterSpacing="1"
-                    Style="{StaticResource SubHeadline}"
-                    FontSize="16"
-                    FontAttributes="Bold"
-                    VerticalOptions="Center"/>
-
-                <CheckBox
-                    x:Name="ShowPasswordCheckBox"
-                    CheckedChanged="OnShowPasswordCheckBox"
-                    VerticalOptions="Center"/>
-                
-            </StackLayout>
-
-            <Button
-                x:Name="LoginBtn"
-                Text="Ingresar"
-                Clicked="OnLoginBtn_Clicked"
-                Style="{ StaticResource BotonesInicio }"/>
-
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
-                <Label
-                    Text="No tenés cuenta?"
-                    TextColor="DarkBlue"
-                    CharacterSpacing="1"
-                    Margin="0, 10, 0, 0"
-                    FontSize="16"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Start"/>
+                <!--<Image
+                Source="esmalte.png"
+                HeightRequest="130"
+                Aspect="AspectFit"
+                Margin="0,10,0,40"
+                SemanticProperties.Description="dot net bot in a hovercraft number nine" />-->
 
                 <Label
-                    Text="Registrate"
-                    Style="{ StaticResource LabelInicio }"
-                    Margin="10, 10, 0, 0">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Registro_Tapped"/>
-                    </Label.GestureRecognizers>
-                </Label>
+            Text="Iniciar sesión"
+            Margin="0,180,0,25"
+            Style="{ StaticResource LabelHeaderInicio }" />
 
-            </StackLayout>
+                <Entry
+            x:Name="txtEmailLogin"
+            BackgroundColor="Transparent"
+            Placeholder="Ingresa tu correo electrónico"
+            PlaceholderColor="{StaticResource Gray900}" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                <Entry
+            x:Name="txtPasswordLogin"
+            Placeholder="Ingresa tu contraseña"
+            IsPassword="True"
+            PlaceholderColor="{StaticResource Gray900}" />
+
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                    <Label
+                Text="Olvidé mi contraseña"
+                TextColor="{ StaticResource DarkRedColor }"
+                CharacterSpacing="1"
+                FontSize="14"
+                FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ResetPwd_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
+                    <Label
+                Text="Mostrar contraseña"
+                TextColor="DarkBlue"
+                CharacterSpacing="1"
+                Style="{StaticResource SubHeadline}"
+                FontSize="16"
+                FontAttributes="Bold"
+                VerticalOptions="Center"/>
+
+                    <CheckBox
+                x:Name="ShowPasswordCheckBox"
+                CheckedChanged="OnShowPasswordCheckBox"
+                VerticalOptions="Center"/>
+
+                </StackLayout>
+
+                <Button
+            x:Name="LoginBtn"
+            Text="Ingresar"
+            Clicked="OnLoginBtn_Clicked"
+            Style="{ StaticResource BotonesInicio }"/>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                    <Label
+                Text="No tenés cuenta?"
+                TextColor="DarkBlue"
+                CharacterSpacing="1"
+                Margin="0, 10, 0, 0"
+                FontSize="16"
+                FontAttributes="Bold"
+                HorizontalOptions="Start"/>
+
+                    <Label
+                Text="Registrate"
+                Style="{ StaticResource LabelInicio }"
+                Margin="10, 10, 0, 0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Registro_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                </StackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+
+    
 </ContentPage>
