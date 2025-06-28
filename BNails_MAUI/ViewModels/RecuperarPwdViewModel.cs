@@ -18,7 +18,6 @@ namespace BNails_MAUI.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private readonly IDialogService _dialogService;
-        private readonly IUsuarioRepository _usuarioRepository;
         private readonly UsuarioService _usuarioService;
 
         private string? email;
@@ -75,10 +74,9 @@ namespace BNails_MAUI.ViewModels
 
         public ICommand RecuperarPwdCommand { get; }
 
-        public RecuperarPwdViewModel(IDialogService dialogService, IUsuarioRepository usuarioRepository, UsuarioService usuarioService)
+        public RecuperarPwdViewModel(IDialogService dialogService, UsuarioService usuarioService)
         {
             _dialogService = dialogService;
-            _usuarioRepository = usuarioRepository;
             _usuarioService = usuarioService;
 
             RecuperarPwdCommand = new Command(OnRecuperarPwd);
@@ -98,7 +96,9 @@ namespace BNails_MAUI.ViewModels
                 return;
             }
 
-            await _dialogService.MostrarAlertaAsync("Email enviado con éxito!", "Revisa tu correo electrónico y seguí los pasos para crear una contraseña nueva.");
+            //await _dialogService.MostrarAlertaAsync("Email enviado con éxito!", "Revisa tu correo electrónico y seguí los pasos para crear una contraseña nueva.");
+
+            await Shell.Current.GoToAsync($"ResetPwd?email={Email}");
         }
 
         private void ValidarEmail()

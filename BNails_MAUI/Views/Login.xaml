@@ -16,11 +16,12 @@
             IsVisible="True" />
 
         <ScrollView HorizontalOptions="Center">
-            <VerticalStackLayout Spacing="25" MaximumWidthRequest="400" HorizontalOptions="Center">
+
+            <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
 
                 <Label
                     Text="Iniciar sesión"
-                    Margin="0,180,0,25"
+                    Margin="0,0,0,25"
                     Style="{ StaticResource LabelHeaderInicio }" />
 
                 <Entry
@@ -91,6 +92,14 @@
                     </Label>
 
                 </StackLayout>
+
+                <Label
+                    Text="Reestablecer contraseña"
+                    Style="{ StaticResource LabelInicio }">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ResetPwd_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
 
             </VerticalStackLayout>
         </ScrollView>

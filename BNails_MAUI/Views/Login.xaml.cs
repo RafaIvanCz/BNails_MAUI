@@ -39,8 +39,8 @@ public partial class Login : ContentPage
         await Shell.Current.GoToAsync(nameof(RecuperarPwd));
     }
 
-    private void OnLoginBtn_Clicked(object sender,EventArgs e)
+    private async void ResetPwd_Tapped(object sender,TappedEventArgs e)
     {
-
+        await Shell.Current.GoToAsync(nameof(ResetPwd));
     }
 }

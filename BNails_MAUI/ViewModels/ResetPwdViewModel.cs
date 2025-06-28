@@ -1,4 +1,5 @@
-﻿using BNails_MAUI.Interfaces.Repositories;
+﻿using BNails_MAUI.Helpers;
+using BNails_MAUI.Interfaces.Repositories;
 using BNails_MAUI.Interfaces.Services;
 using BNails_MAUI.Models;
 using BNails_MAUI.Services;
@@ -14,59 +15,25 @@ using System.Windows.Input;
 
 namespace BNails_MAUI.ViewModels
 {
-    public class RegistroViewModel : INotifyPropertyChanged
+    [QueryProperty(nameof(Email),"email")]
+
+    public class ResetPwdViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private readonly IDialogService _dialogService;
-        private readonly IUsuarioRepository _usuarioRepository;
         private readonly UsuarioService _usuarioService;
 
-        private string? nombre;
-        private string? email;
         private string? password;
         private string? rePassword;
 
-        private bool comenzoAEscribirEmail;
         private bool comenzoAEscribirPassword;
         private bool comenzoAEscribirRePassword;
 
-        private bool emailCorrecto;
         private bool cumpleMinCaracteres;
         private bool tieneMayuscula;
         private bool tieneNumero;
         private bool coincidenPasswords;
-
-        public string? Nombre
-        {
-            get => nombre;
-            set
-            {
-                if(nombre != value)
-                {
-                    nombre = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string? Email
-        {
-            get => email;
-            set
-            {
-                if(email != value)
-                {
-                    email = value;
-                    OnPropertyChanged();
-                    if(!string.IsNullOrEmpty(email))
-                    {
-                        ComenzoAEscribirEmail = true;
-                        ValidarEmail();
-                    }
-                }
-            }
-        }
 
         public string? Password
         {
@@ -101,20 +68,6 @@ namespace BNails_MAUI.ViewModels
             }
         }
 
-        public bool ComenzoAEscribirEmail
-        {
-            get => comenzoAEscribirEmail;
-            set
-            {
-                if(comenzoAEscribirEmail != value)
-                {
-                    comenzoAEscribirEmail = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(MostrarFormatoEmail));
-                }
-            }
-        }
-
         public bool ComenzoAEscribirPassword
         {
             get => comenzoAEscribirPassword;
@@ -141,20 +94,6 @@ namespace BNails_MAUI.ViewModels
                     comenzoAEscribirRePassword = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(MostrarCoincidencia));
-                }
-            }
-        }
-
-        public bool EmailCorrecto
-        {
-            get => emailCorrecto;
-            set
-            {
-                if(emailCorrecto != value)
-                {
-                    emailCorrecto = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(MostrarFormatoEmail));
                 }
             }
         }
@@ -214,84 +153,55 @@ namespace BNails_MAUI.ViewModels
                 }
             }
         }
-
-        // Mostrar validaciones solo si el usuario ya empezó a escribir
-        public bool MostrarFormatoEmail => ComenzoAEscribirEmail && !EmailCorrecto;
         public bool MostrarMinCaracteres => ComenzoAEscribirPassword && !CumpleMinCaracteres;
         public bool MostrarMayuscula => ComenzoAEscribirPassword && !TieneMayuscula;
         public bool MostrarNumero => ComenzoAEscribirPassword && !TieneNumero;
         public bool MostrarCoincidencia => ComenzoAEscribirRePassword && !CoincidenPasswords;
 
-        public ICommand? RegistrarCommand { get; }
+        public ICommand ResetPwdCommand { get; }
+        public string? Email { get; set; }
 
-        public RegistroViewModel(IDialogService dialogService, IUsuarioRepository usuarioRepository, UsuarioService usuarioService)
+        public ResetPwdViewModel(IDialogService dialogService, UsuarioService usuarioService)
         {
-            this._dialogService = dialogService;
-            _usuarioRepository = usuarioRepository;
+            _dialogService = dialogService;
             _usuarioService = usuarioService;
 
-            RegistrarCommand = new Command(OnRegistrar);
+            ResetPwdCommand = new Command(OnActualizarPwd);
         }
 
-        private async void OnRegistrar()
+        public async void OnActualizarPwd()
         {
-            if(string.IsNullOrWhiteSpace(Nombre) || string.IsNullOrWhiteSpace(Email) ||
-                string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(RePassword))
+            if(String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(RePassword))
             {
-                await _dialogService.MostrarAlertaAsync("Atención!","Completá todos los campos");
+                await _dialogService.MostrarAlertaAsync("Atención!", "Completá todos los campos");
                 return;
             }
 
-            if(!EmailCorrecto)
+            if(!Regex.IsMatch(Password,@"^(?=.*[A-Z])(?=.*\d).{8,}$"))
             {
                 await _dialogService.MostrarAlertaAsync("Atención!","Correo no válido");
                 return;
             }
 
-            if(_usuarioRepository.ExisteUsuarioPorEmail(Email))
+            string hashedPassword = SeguridadHelper.HashPassword(Password);
+
+            Usuario? actualizarUsuario = _usuarioService.GetUsuarioPorEmail(Email);
+
+            if(actualizarUsuario != null)
             {
-                await _dialogService.MostrarAlertaAsync("Atención!","El correo ya se encuentra registrado en el sistema");
-                return;
+                actualizarUsuario.Password = hashedPassword;
             }
 
-            if(!CumpleMinCaracteres || !TieneMayuscula || !TieneNumero)
+            bool actualizado = _usuarioService.ActualizarPwdUsuario(actualizarUsuario);
+
+            if(actualizado)
             {
-                await _dialogService.MostrarAlertaAsync("Atención!","La contraseña no cumple las condiciones de seguridad");
-                return;
-            }
-
-            if(!CoincidenPasswords)
-            {
-                await _dialogService.MostrarAlertaAsync("Atención!","Las contraseñas no coinciden");
-                RePassword = string.Empty;
-                return;
-            }
-
-            string hashedPassword = Helpers.SeguridadHelper.HashPassword(Password);
-
-            var usuario = new Usuario
-            {
-                Nombre = Nombre,
-                Email = Email,
-                Password = hashedPassword
-            };
-
-            var usuarioService = new UsuarioService();
-            bool registroExitoso = usuarioService.RegistrarUsuario(usuario);
-
-            if (registroExitoso)
-            {
-                await _dialogService.MostrarAlertaAsync("Felicidades!", "Usuario guardado con éxito!");
-                await Shell.Current.GoToAsync("..");
+                await _dialogService.MostrarAlertaAsync("Éxito","La contraseña fue actualizada correctamente");
+                await Shell.Current.GoToAsync("//Login");
             } else
             {
-                await _dialogService.MostrarAlertaAsync("Atención!", "No se pudo guardar el usuario. Intente nuevamente.");
+                await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al actualizar la contraseña");
             }
-        }
-
-        private void ValidarEmail()
-        {
-            EmailCorrecto = Regex.IsMatch(Email,@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         }
 
         private void ValidarPassword()

@@ -65,5 +65,19 @@ namespace BNails_MAUI.Repositories
 
             return null;
         }
+
+        public bool ActualizarPwd(Usuario usuario)
+        {
+            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            connection.Open();
+
+            string query = "UPDATE usuarios SET password = @Password WHERE email = @Email";
+            using var command = new MySqlCommand(query,connection);
+            command.Parameters.AddWithValue("@Password",usuario.Password);
+            command.Parameters.AddWithValue("@Email",usuario.Email);
+
+            int rows = command.ExecuteNonQuery();
+            return rows > 0;
+        }
     }
 }

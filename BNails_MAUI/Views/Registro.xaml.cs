@@ -2,7 +2,6 @@ using BNails_MAUI.Interfaces.Repositories;
 using BNails_MAUI.Interfaces.Services;
 using BNails_MAUI.Services;
 using BNails_MAUI.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BNails_MAUI.Views;
 
@@ -27,7 +26,7 @@ public partial class Registro : ContentPage
 
     private async void VolverLogin_Tapped(object sender,TappedEventArgs e)
     {
-		await Shell.Current.GoToAsync("..");
+		await Shell.Current.GoToAsync("//Login");
     }
 
     private void OnShowPasswordCheckBox_Registro(object sender,CheckedChangedEventArgs e)
