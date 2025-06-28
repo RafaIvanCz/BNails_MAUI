@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:BNails_MAUI.ViewModels"
-             x:Class="BNails_MAUI.Views.ResetPwd"
-             x:DataType="vm:ResetPwdViewModel"
+             x:Class="BNails_MAUI.Views.RecuperarPwd"
+             x:DataType="vm:RecuperarPwdViewModel"
              Shell.NavBarIsVisible="False"
-             Title="ResetPwd">
+             Title="RecuperarPwd">
 
     <ScrollView HorizontalOptions="Center">
         
@@ -30,7 +30,8 @@
             <Button 
                 Text="Continuar"
                 Margin="0,30,0,50"
-                Style="{ StaticResource BotonesInicio }" />
+                Style="{ StaticResource BotonesInicio }"
+                Command="{ Binding RecuperarPwdCommand }"/>
             
             <Label
                 Text="Volver al Inicio de Sesión"

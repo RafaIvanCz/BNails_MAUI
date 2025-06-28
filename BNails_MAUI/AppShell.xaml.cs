@@ -9,7 +9,7 @@ namespace BNails_MAUI
             InitializeComponent();
             Routing.RegisterRoute(nameof(Login), typeof(Login));
             Routing.RegisterRoute(nameof(Registro), typeof(Registro));
-            Routing.RegisterRoute(nameof(ResetPwd),typeof(ResetPwd));
+            Routing.RegisterRoute(nameof(RecuperarPwd),typeof(RecuperarPwd));
         }
     }
 }

@@ -2,14 +2,13 @@ using BNails_MAUI.Interfaces.Repositories;
 using BNails_MAUI.Interfaces.Services;
 using BNails_MAUI.Services;
 using BNails_MAUI.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BNails_MAUI.Views;
 
-public partial class Registro : ContentPage
+public partial class RecuperarPwd : ContentPage
 {
-    public Registro()
-    {
+	public RecuperarPwd()
+	{
         InitializeComponent();
         var services = ((App) App.Current!).Services;
 
@@ -22,17 +21,11 @@ public partial class Registro : ContentPage
             throw new Exception("No se pudieron obtener los servicios necesarios.");
         }
 
-        BindingContext = new RegistroViewModel(dialogService,usuarioRepo,usuarioService);
+        BindingContext = new RecuperarPwdViewModel(dialogService,usuarioRepo,usuarioService);
     }
 
     private async void VolverLogin_Tapped(object sender,TappedEventArgs e)
     {
 		await Shell.Current.GoToAsync("..");
-    }
-
-    private void OnShowPasswordCheckBox_Registro(object sender,CheckedChangedEventArgs e)
-    {
-        txtPasswordRegistro.IsPassword = !e.Value;
-        txtRePasswordRegistro.IsPassword = !e.Value;
     }
 }
