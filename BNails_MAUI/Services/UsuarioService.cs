@@ -21,5 +21,10 @@ namespace BNails_MAUI.Services
         {
             return _usuarioRepository.GuardarUsuario(usuario);
         }
+
+        public bool ExisteUsuarioPorEmail(string email)
+        {
+            return _usuarioRepository.ExisteUsuarioPorEmail(email);
+        }
     }
 }

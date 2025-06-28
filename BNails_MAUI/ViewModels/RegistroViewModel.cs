@@ -1,4 +1,5 @@
-﻿using BNails_MAUI.Interfaces;
+﻿using BNails_MAUI.Interfaces.Repositories;
+using BNails_MAUI.Interfaces.Services;
 using BNails_MAUI.Models;
 using BNails_MAUI.Services;
 using System;
@@ -17,7 +18,9 @@ namespace BNails_MAUI.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private readonly IDialogService dialogService;
+        private readonly IDialogService _dialogService;
+        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly UsuarioService _usuarioService;
 
         private string? nombre;
         private string? email;
@@ -34,7 +37,7 @@ namespace BNails_MAUI.ViewModels
         private bool tieneNumero;
         private bool coincidenPasswords;
 
-        public string Nombre
+        public string? Nombre
         {
             get => nombre;
             set
@@ -47,7 +50,7 @@ namespace BNails_MAUI.ViewModels
             }
         }
 
-        public string Email
+        public string? Email
         {
             get => email;
             set
@@ -65,7 +68,7 @@ namespace BNails_MAUI.ViewModels
             }
         }
 
-        public string Password
+        public string? Password
         {
             get => password;
             set
@@ -82,7 +85,7 @@ namespace BNails_MAUI.ViewModels
             }
         }
 
-        public string RePassword
+        public string? RePassword
         {
             get => rePassword;
             set
@@ -221,9 +224,12 @@ namespace BNails_MAUI.ViewModels
 
         public ICommand? RegistrarCommand { get; }
 
-        public RegistroViewModel(IDialogService dialogService)
+        public RegistroViewModel(IDialogService dialogService, IUsuarioRepository usuarioRepository, UsuarioService usuarioService)
         {
-            this.dialogService = dialogService;
+            this._dialogService = dialogService;
+            _usuarioRepository = usuarioRepository;
+            _usuarioService = usuarioService;
+
             RegistrarCommand = new Command(OnRegistrar);
         }
 
@@ -232,25 +238,31 @@ namespace BNails_MAUI.ViewModels
             if(string.IsNullOrWhiteSpace(Nombre) || string.IsNullOrWhiteSpace(Email) ||
                 string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(RePassword))
             {
-                await dialogService.MostrarAlertaAsync("Error","Completá todos los campos");
+                await _dialogService.MostrarAlertaAsync("Atención!","Completá todos los campos");
                 return;
             }
 
-            if(!Regex.IsMatch(Email,@"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            if(!EmailCorrecto)
             {
-                await dialogService.MostrarAlertaAsync("Error","Correo inválido");
+                await _dialogService.MostrarAlertaAsync("Error","Correo inválido");
+                return;
+            }
+
+            if(_usuarioRepository.ExisteUsuarioPorEmail(Email))
+            {
+                await _dialogService.MostrarAlertaAsync("Atención!","El correo ya se encuentra registrado en el sistema");
                 return;
             }
 
             if(!CumpleMinCaracteres || !TieneMayuscula || !TieneNumero)
             {
-                await dialogService.MostrarAlertaAsync("Error","Contraseña insegura");
+                await _dialogService.MostrarAlertaAsync("Atención!","La contraseña no cumple las condiciones de seguridad");
                 return;
             }
 
             if(!CoincidenPasswords)
             {
-                await dialogService.MostrarAlertaAsync("Error","Las contraseñas no coinciden");
+                await _dialogService.MostrarAlertaAsync("Atención!","Las contraseñas no coinciden");
                 RePassword = string.Empty;
                 return;
             }
@@ -269,11 +281,11 @@ namespace BNails_MAUI.ViewModels
 
             if (registroExitoso)
             {
-                await dialogService.MostrarAlertaAsync("Éxito", "Usuario guardado con éxito!");
+                await _dialogService.MostrarAlertaAsync("Felicidades!", "Usuario guardado con éxito!");
                 await Shell.Current.GoToAsync("..");
             } else
             {
-                await dialogService.MostrarAlertaAsync("Error", "No se pudo guardar el usuario. Intente nuevamente.");
+                await _dialogService.MostrarAlertaAsync("Atención!", "No se pudo guardar el usuario. Intente nuevamente.");
             }
         }
 

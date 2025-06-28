@@ -1,4 +1,5 @@
 ﻿using BNails_MAUI.Interfaces;
+using BNails_MAUI.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace BNails_MAUI.Services
     {
         public async Task MostrarAlertaAsync(string titulo, string mensaje, string botonTexto = "Aceptar")
         {
-            if(Application.Current?.MainPage != null)
-                await Application.Current.MainPage.DisplayAlert(titulo, mensaje, botonTexto);
+            var page = Application.Current?.Windows[0].Page;
+            if(page != null)
+                await page.DisplayAlert(titulo, mensaje, botonTexto);
         }
     }
 }

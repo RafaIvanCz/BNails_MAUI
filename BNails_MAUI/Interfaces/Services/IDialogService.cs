@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BNails_MAUI.Interfaces
+namespace BNails_MAUI.Interfaces.Services
 {
     public interface IDialogService
     {

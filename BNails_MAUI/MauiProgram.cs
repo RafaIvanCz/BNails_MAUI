@@ -1,4 +1,6 @@
-﻿using BNails_MAUI.Interfaces;
+﻿using BNails_MAUI.Interfaces.Repositories;
+using BNails_MAUI.Interfaces.Services;
+using BNails_MAUI.Repositories;
 using BNails_MAUI.Services;
 using Microsoft.Extensions.Logging;
 
@@ -17,7 +19,9 @@ namespace BNails_MAUI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<IDialogService, DialogService>();
+            builder.Services.AddSingleton<IDialogService,DialogService>();
+            builder.Services.AddSingleton<IUsuarioRepository,UsuarioRepository>();
+            builder.Services.AddSingleton<UsuarioService>();
             builder.Services.AddSingleton<App>();
 
 #if DEBUG

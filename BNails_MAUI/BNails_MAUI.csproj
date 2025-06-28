@@ -70,8 +70,8 @@
 	  <Compile Update="Views\Login.xaml.cs">
 	    <DependentUpon>Login.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\ResetPwd.xaml.cs">
-	    <DependentUpon>ResetPwd.xaml</DependentUpon>
+	  <Compile Update="Views\RecuperarPwd.xaml.cs">
+	    <DependentUpon>RecuperarPwd.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\Registro.xaml.cs">
 	    <DependentUpon>Registro.xaml</DependentUpon>
@@ -82,7 +82,7 @@
 	  <MauiXaml Update="Views\Login.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ResetPwd.xaml">
+	  <MauiXaml Update="Views\RecuperarPwd.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Registro.xaml">
