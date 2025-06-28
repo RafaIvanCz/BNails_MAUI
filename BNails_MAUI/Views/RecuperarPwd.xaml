@@ -8,12 +8,14 @@
              Title="RecuperarPwd">
 
     <ScrollView HorizontalOptions="Center">
-        
-        <VerticalStackLayout Padding="20" Spacing="10" VerticalOptions="Center" HorizontalOptions="Center">
+
+        <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
+            
             <Label 
                 Text="Recuperar contraseña"
                 Margin="0,0,0,55"
                 Style="{ StaticResource LabelHeaderInicio }" />
+            
             <Entry 
                 Placeholder="Ingresá tu correo electrónico"
                 PlaceholderColor="{ StaticResource Gray900 }"

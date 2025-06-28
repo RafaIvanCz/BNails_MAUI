@@ -26,5 +26,16 @@ namespace BNails_MAUI.Services
         {
             return _usuarioRepository.ExisteUsuarioPorEmail(email);
         }
+
+        public Usuario? GetUsuarioPorEmail(string email)
+        {
+            return _usuarioRepository.ObtenerUsuarioPorEmail(email);
+        }
+
+        public bool ActualizarPwdUsuario(Usuario usuario)
+        {
+            return _usuarioRepository.ActualizarPwd(usuario);
+        }
+
     }
 }
