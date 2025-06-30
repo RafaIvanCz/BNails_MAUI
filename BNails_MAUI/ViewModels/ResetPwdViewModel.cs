@@ -34,6 +34,7 @@ namespace BNails_MAUI.ViewModels
         private bool tieneMayuscula;
         private bool tieneNumero;
         private bool coincidenPasswords;
+        private bool isCargando;
 
         public string? Password
         {
@@ -153,6 +154,20 @@ namespace BNails_MAUI.ViewModels
                 }
             }
         }
+
+        public bool IsCargando
+        {
+            get => isCargando;
+            set
+            {
+                if(isCargando != value)
+                {
+                    isCargando = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool MostrarMinCaracteres => ComenzoAEscribirPassword && !CumpleMinCaracteres;
         public bool MostrarMayuscula => ComenzoAEscribirPassword && !TieneMayuscula;
         public bool MostrarNumero => ComenzoAEscribirPassword && !TieneNumero;
@@ -171,36 +186,45 @@ namespace BNails_MAUI.ViewModels
 
         public async void OnActualizarPwd()
         {
-            if(String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(RePassword))
+            IsCargando = true;
+
+            try
             {
-                await _dialogService.MostrarAlertaAsync("Atención!", "Completá todos los campos");
-                return;
-            }
+                if(String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(RePassword))
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","Completá todos los campos");
+                    return;
+                }
 
-            if(!Regex.IsMatch(Password,@"^(?=.*[A-Z])(?=.*\d).{8,}$"))
+                if(!Regex.IsMatch(Password,@"^(?=.*[A-Z])(?=.*\d).{8,}$"))
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","Correo no válido");
+                    return;
+                }
+
+                string hashedPassword = SeguridadHelper.HashPassword(Password);
+
+                Usuario? actualizarUsuario = _usuarioService.GetUsuarioPorEmail(Email);
+
+                if(actualizarUsuario != null)
+                {
+                    actualizarUsuario.Password = hashedPassword;
+                }
+
+                bool actualizado = _usuarioService.ActualizarPwdUsuario(actualizarUsuario);
+
+                if(actualizado)
+                {
+                    await _dialogService.MostrarAlertaAsync("Éxito","La contraseña fue actualizada correctamente");
+                    await Shell.Current.GoToAsync("//Login");
+                } else
+                {
+                    await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al actualizar la contraseña");
+                }
+
+            } finally
             {
-                await _dialogService.MostrarAlertaAsync("Atención!","Correo no válido");
-                return;
-            }
-
-            string hashedPassword = SeguridadHelper.HashPassword(Password);
-
-            Usuario? actualizarUsuario = _usuarioService.GetUsuarioPorEmail(Email);
-
-            if(actualizarUsuario != null)
-            {
-                actualizarUsuario.Password = hashedPassword;
-            }
-
-            bool actualizado = _usuarioService.ActualizarPwdUsuario(actualizarUsuario);
-
-            if(actualizado)
-            {
-                await _dialogService.MostrarAlertaAsync("Éxito","La contraseña fue actualizada correctamente");
-                await Shell.Current.GoToAsync("//Login");
-            } else
-            {
-                await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al actualizar la contraseña");
+                IsCargando = false;
             }
         }
 

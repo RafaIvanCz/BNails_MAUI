@@ -3,89 +3,97 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BNails_MAUI.Views.ResetPwd"
              xmlns:vm="clr-namespace:BNails_MAUI.ViewModels"
+             xmlns:popup="clr-namespace:BNails_MAUI.Views.Popups"
              x:DataType="vm:ResetPwdViewModel"
              Shell.NavBarIsVisible="False"
              Title="ResetPwd">
 
-    <ScrollView HorizontalOptions="Center">
+    <Grid>
 
-        <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
+        <ScrollView HorizontalOptions="Center">
 
-            <Label
-                Text="Reestablecer contraseña"
-                Margin="0,0,0,35"
-                Style="{StaticResource LabelHeaderInicio}" />
+            <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
 
-            <Entry
-                x:Name="txtPasswordResetPwd"
-                Placeholder="Ingresa la nueva contraseña"
-                PlaceholderColor="{StaticResource Gray900}"
-                IsPassword="True"
-                Text="{Binding Password}" />
-
-            <!-- Validaciones de contraseña -->
-            <StackLayout Margin="0,-20,0,0">
                 <Label
-                    Text="❌ Mínimo 8 caracteres"
+                    Text="Reestablecer contraseña"
+                    Margin="0,0,0,35"
+                    Style="{StaticResource LabelHeaderInicio}" />
+
+                <Entry
+                    x:Name="txtPasswordResetPwd"
+                    Placeholder="Ingresa la nueva contraseña"
+                    PlaceholderColor="{StaticResource Gray900}"
+                    IsPassword="True"
+                    Text="{Binding Password}" />
+
+                <!-- Validaciones de contraseña -->
+                <StackLayout Margin="0,-20,0,0">
+                    <Label
+                        Text="❌ Mínimo 8 caracteres"
+                        TextColor="Red"
+                        IsVisible="{Binding MostrarMinCaracteres}" />
+
+                    <Label
+                        Text="❌ Al menos una mayúscula"
+                        TextColor="Red"
+                        IsVisible="{Binding MostrarMayuscula}" />
+
+                    <Label
+                        Text="❌ Al menos un número"
+                        TextColor="Red"
+                        IsVisible="{Binding MostrarNumero}" />
+
+                </StackLayout>
+
+                <Entry
+                    x:Name="txtRePasswordResetPwd"
+                    Placeholder="Volvé a ingresar la contraseña"
+                    PlaceholderColor="{StaticResource Gray900}"
+                    IsPassword="True"
+                    Text="{Binding RePassword}" />
+
+                <Label
+                    Text="Las contraseñas deben ser iguales"
                     TextColor="Red"
-                    IsVisible="{Binding MostrarMinCaracteres}" />
+                    Margin="0,-20,0,0"
+                    IsVisible="{Binding MostrarCoincidencia}" />
+
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
+                    <Label
+                        Text="Mostrar contraseña"
+                        TextColor="DarkBlue"
+                        CharacterSpacing="1"
+                        Style="{StaticResource SubHeadline}"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"/>
+
+                    <CheckBox
+                        x:Name="ShowPasswordCheckBox"
+                        CheckedChanged="OnShowPasswordCheckBox_ResetPwd"
+                        VerticalOptions="Center"/>
+
+                </StackLayout>
+
+                <Button
+                    Text="Continuar"
+                    Style="{ StaticResource BotonesInicio }"
+                    Command="{Binding ResetPwdCommand}" />
 
                 <Label
-                    Text="❌ Al menos una mayúscula"
-                    TextColor="Red"
-                    IsVisible="{Binding MostrarMayuscula}" />
+                    Text="Volver al Inicio de Sesión"
+                    Style="{ StaticResource LabelInicio }">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="VolverResetPwd_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
 
-                <Label
-                    Text="❌ Al menos un número"
-                    TextColor="Red"
-                    IsVisible="{Binding MostrarNumero}" />
+            </VerticalStackLayout>
 
-            </StackLayout>
+        </ScrollView>
 
-            <Entry
-                x:Name="txtRePasswordResetPwd"
-                Placeholder="Volvé a ingresar la contraseña"
-                PlaceholderColor="{StaticResource Gray900}"
-                IsPassword="True"
-                Text="{Binding RePassword}" />
+        <popup:LoadingPopup x:Name="loadingPopup" />
 
-            <Label
-                Text="Las contraseñas deben ser iguales"
-                TextColor="Red"
-                Margin="0,-20,0,0"
-                IsVisible="{Binding MostrarCoincidencia}" />
-
-            <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
-                <Label
-                    Text="Mostrar contraseña"
-                    TextColor="DarkBlue"
-                    CharacterSpacing="1"
-                    Style="{StaticResource SubHeadline}"
-                    FontSize="16"
-                    FontAttributes="Bold"
-                    VerticalOptions="Center"/>
-
-                <CheckBox
-                    x:Name="ShowPasswordCheckBox"
-                    CheckedChanged="OnShowPasswordCheckBox_ResetPwd"
-                    VerticalOptions="Center"/>
-
-            </StackLayout>
-
-            <Button
-                Text="Continuar"
-                Style="{ StaticResource BotonesInicio }"
-                Command="{Binding ResetPwdCommand}" />
-
-            <Label
-                Text="Volver al Inicio de Sesión"
-                Style="{ StaticResource LabelInicio }">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="VolverResetPwd_Tapped"/>
-                </Label.GestureRecognizers>
-            </Label>
-
-        </VerticalStackLayout>
-
-    </ScrollView>
+    </Grid>
+    
 </ContentPage>
