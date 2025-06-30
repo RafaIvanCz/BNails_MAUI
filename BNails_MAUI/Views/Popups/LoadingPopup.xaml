@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BNails_MAUI.Views.Popups.LoadingPopup"
+             IsVisible="{Binding IsCargando}"
+             BackgroundColor="#80000000"
+             VerticalOptions="Fill"
+             HorizontalOptions="Fill">
+
+    <Grid VerticalOptions="Center" HorizontalOptions="Center">
+        <VerticalStackLayout Spacing="20" HorizontalOptions="Center" VerticalOptions="Center">
+            <ActivityIndicator IsRunning="True" Color="White" WidthRequest="60" HeightRequest="60"/>
+            <Label Text="Cargando..." TextColor="White" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentView>

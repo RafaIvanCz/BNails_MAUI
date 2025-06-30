@@ -19,6 +19,7 @@ public partial class ResetPwd : ContentPage
             throw new Exception("No se pudieron obtener los servicios necesarios.");
 
         BindingContext = new ResetPwdViewModel(dialogService,usuarioService);
+        loadingPopup.BindingContext = BindingContext;
     }
 
     private async void VolverResetPwd_Tapped(object sender,TappedEventArgs e)
