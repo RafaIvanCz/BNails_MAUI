@@ -4,6 +4,7 @@ using BNails_MAUI.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,9 +60,12 @@ namespace BNails_MAUI.Repositories
                     Id = reader.GetInt32("id"),
                     Nombre = reader.GetString("nombre"),
                     Email = reader.GetString("email"),
-                    Password = reader.GetString("password")
+                    Password = reader.GetString("password"),
+                    CodigoRecuperacion = reader.IsDBNull("codigo_recuperacion") ? null : reader.GetString("codigo_recuperacion"),
+                    CodigoRecuExpira = reader.IsDBNull("codigo_fecha_exp") ? null : reader.GetDateTime("codigo_fecha_exp")
                 };
             }
+
 
             return null;
         }
@@ -75,6 +79,25 @@ namespace BNails_MAUI.Repositories
             using var command = new MySqlCommand(query,connection);
             command.Parameters.AddWithValue("@Password",usuario.Password);
             command.Parameters.AddWithValue("@Email",usuario.Email);
+
+            int rows = command.ExecuteNonQuery();
+            return rows > 0;
+        }
+
+        public bool GuardarCodigoVerificacion(string email,string codigo,DateTime fechaExpiracion)
+        {
+            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            connection.Open();
+
+            string query = @"UPDATE usuarios 
+                     SET codigo_recuperacion = @Codigo, 
+                         codigo_fecha_exp = @Expira
+                     WHERE email = @Email";
+
+            using var command = new MySqlCommand(query,connection);
+            command.Parameters.AddWithValue("@Codigo",codigo);
+            command.Parameters.AddWithValue("@Expira",fechaExpiracion);
+            command.Parameters.AddWithValue("@Email",email);
 
             int rows = command.ExecuteNonQuery();
             return rows > 0;

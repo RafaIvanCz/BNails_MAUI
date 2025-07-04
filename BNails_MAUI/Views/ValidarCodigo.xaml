@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BNails_MAUI.ViewModels"
+             x:Class="BNails_MAUI.Views.ValidarCodigo"
+             x:DataType="vm:ValidarCodigoViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="ValidarCodigo">
+
+    <Grid>
+
+        <ScrollView HorizontalOptions="Center">
+
+            <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
+
+                <Label
+                    Text="Ingresar código"
+                    Margin="0,0,0,25"
+                    Style="{ StaticResource LabelHeaderInicio }" />
+
+                <Entry
+                    Placeholder="_ _ _ _"
+                    CharacterSpacing="5"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HorizontalTextAlignment="Center"
+                    PlaceholderColor="{StaticResource Gray900}"
+                    Text="{Binding CodigoIngresado}" />
+
+                <Button
+                    Text="Continuar"
+                    Style="{ StaticResource BotonesInicio }"
+                    Command="{Binding ConfirmarCodigoCommand}" />
+
+                <Label
+                    Text="Volver al Login"
+                    Margin="0,40,0,0"
+                    Style="{ StaticResource LabelInicio }">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="VolverLogin_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                
+            </VerticalStackLayout>
+            
+        </ScrollView>
+        
+    </Grid>
+    
+</ContentPage>

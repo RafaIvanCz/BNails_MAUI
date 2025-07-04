@@ -1,27 +1,25 @@
-using BNails_MAUI.Interfaces.Repositories;
 using BNails_MAUI.Interfaces.Services;
 using BNails_MAUI.Services;
 using BNails_MAUI.ViewModels;
 
 namespace BNails_MAUI.Views;
 
-public partial class RecuperarPwd : ContentPage
+public partial class ValidarCodigo : ContentPage
 {
-	public RecuperarPwd()
+	public ValidarCodigo()
 	{
-        InitializeComponent();
+		InitializeComponent();
         var services = ((App) App.Current!).Services;
 
         var dialogService = services?.GetService<IDialogService>();
         var usuarioService = services?.GetService<UsuarioService>();
-        var emailService = services?.GetService<IEmailService>();
 
-        if(dialogService == null || usuarioService == null || emailService == null)
+        if(dialogService == null || usuarioService == null)
         {
             throw new Exception("No se pudieron obtener los servicios necesarios.");
         }
 
-        BindingContext = new RecuperarPwdViewModel(dialogService,usuarioService,emailService);
+        BindingContext = new ValidarCodigoViewModel(dialogService,usuarioService);
     }
 
     private async void VolverLogin_Tapped(object sender,TappedEventArgs e)
