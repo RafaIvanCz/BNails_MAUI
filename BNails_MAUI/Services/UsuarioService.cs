@@ -37,5 +37,9 @@ namespace BNails_MAUI.Services
             return _usuarioRepository.ActualizarPwd(usuario);
         }
 
+        public bool GuardarCodigoVerificacion(string email,string codigo,DateTime fechaExpiracion)
+        {
+            return _usuarioRepository.GuardarCodigoVerificacion(email,codigo,fechaExpiracion);
+        }
     }
 }

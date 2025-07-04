@@ -21,7 +21,10 @@ namespace BNails_MAUI
 
             builder.Services.AddSingleton<IDialogService,DialogService>();
             builder.Services.AddSingleton<IUsuarioRepository,UsuarioRepository>();
+            builder.Services.AddSingleton<IConfiguracionRepository,ConfiguracionRepository>();
             builder.Services.AddSingleton<UsuarioService>();
+            builder.Services.AddSingleton<IEmailService,EmailService>();
+
             builder.Services.AddSingleton<App>();
 
 #if DEBUG

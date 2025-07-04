@@ -11,6 +11,7 @@ namespace BNails_MAUI
             Routing.RegisterRoute(nameof(Registro), typeof(Registro));
             Routing.RegisterRoute(nameof(RecuperarPwd),typeof(RecuperarPwd));
             Routing.RegisterRoute(nameof(ResetPwd), typeof(ResetPwd));
+            Routing.RegisterRoute(nameof(ValidarCodigo),typeof(ValidarCodigo));
         }
     }
 }

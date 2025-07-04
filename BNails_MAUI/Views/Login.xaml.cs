@@ -39,8 +39,8 @@ public partial class Login : ContentPage
         await Shell.Current.GoToAsync(nameof(RecuperarPwd));
     }
 
-    private async void ResetPwd_Tapped(object sender,TappedEventArgs e)
+    private async void ValidarCodigo_Tapped(object sender,TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(ResetPwd));
+        await Shell.Current.GoToAsync(nameof(ValidarCodigo));
     }
 }

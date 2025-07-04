@@ -19,6 +19,7 @@ namespace BNails_MAUI.ViewModels
 
         private readonly IDialogService _dialogService;
         private readonly UsuarioService _usuarioService;
+        private readonly IEmailService _emailService;
 
         private string? email;
         private bool comenzoAEscribirEmail;
@@ -74,10 +75,11 @@ namespace BNails_MAUI.ViewModels
 
         public ICommand RecuperarPwdCommand { get; }
 
-        public RecuperarPwdViewModel(IDialogService dialogService, UsuarioService usuarioService)
+        public RecuperarPwdViewModel(IDialogService dialogService, UsuarioService usuarioService, IEmailService emailService)
         {
             _dialogService = dialogService;
             _usuarioService = usuarioService;
+            _emailService = emailService;
 
             RecuperarPwdCommand = new Command(OnRecuperarPwd);
         }
@@ -96,9 +98,19 @@ namespace BNails_MAUI.ViewModels
                 return;
             }
 
-            //await _dialogService.MostrarAlertaAsync("Email enviado con éxito!", "Revisa tu correo electrónico y seguí los pasos para crear una contraseña nueva.");
+            string codigoVerificacion = _emailService.GenerarCodigoVerificacion();
+            string? nombreUsuario = _usuarioService.GetUsuarioPorEmail(Email).Nombre;
 
-            await Shell.Current.GoToAsync($"ResetPwd?email={Email}");
+            bool emailEnviado = await _emailService.EnviarEmailCodigoVerificacion(Email, codigoVerificacion, nombreUsuario);
+
+            if(emailEnviado)
+            {
+                await _dialogService.MostrarAlertaAsync("Email enviado con éxito!","Revisá tu correo electrónico para ver el código de 4 dígitos que se te envió.");
+                await Shell.Current.GoToAsync($"ValidarCodigo?email={Email}");
+            } else
+            {
+                await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al enviar el email. Intentá nuevamente.");
+            }
         }
 
         private void ValidarEmail()
@@ -109,6 +121,5 @@ namespace BNails_MAUI.ViewModels
 
         private void OnPropertyChanged([CallerMemberName] string name = null) =>
             PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(name));
-
     }
 }
