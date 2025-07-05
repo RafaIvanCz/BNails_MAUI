@@ -55,17 +55,19 @@ namespace BNails_MAUI.Repositories
 
             if(reader.Read())
             {
+                int idxCodigo = reader.GetOrdinal("codigo_recuperacion");
+                int idxFecha = reader.GetOrdinal("codigo_fecha_exp");
+
                 return new Usuario
                 {
                     Id = reader.GetInt32("id"),
                     Nombre = reader.GetString("nombre"),
                     Email = reader.GetString("email"),
                     Password = reader.GetString("password"),
-                    CodigoRecuperacion = reader.IsDBNull("codigo_recuperacion") ? null : reader.GetString("codigo_recuperacion"),
-                    CodigoRecuExpira = reader.IsDBNull("codigo_fecha_exp") ? null : reader.GetDateTime("codigo_fecha_exp")
+                    CodigoRecuperacion = reader.IsDBNull(idxCodigo) ? null : reader.GetString(idxCodigo),
+                    CodigoRecuExpira = reader.IsDBNull(idxFecha) ? null : reader.GetDateTime(idxFecha).ToLocalTime()
                 };
             }
-
 
             return null;
         }

@@ -75,7 +75,7 @@ namespace BNails_MAUI.ViewModels
             if(usuario.CodigoRecuExpira < DateTime.Now)
             {
                 await _dialogService.MostrarAlertaAsync("Atención!","El código ingresado ha expirado. Por favor, volvé a solicitar el código de recuperación.");
-                await Shell.Current.GoToAsync("//RecuperarPwd");
+                await Shell.Current.GoToAsync("RecuperarPwd");
                 return;
             }
 
