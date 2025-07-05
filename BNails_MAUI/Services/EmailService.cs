@@ -32,10 +32,10 @@ namespace BNails_MAUI.Services
         {
             try
             {
-                var Existeusuario = _usuarioService.ExisteUsuarioPorEmail(email);
-                if(Existeusuario == null) return false;
+                bool Existeusuario = _usuarioService.ExisteUsuarioPorEmail(email);
+                if(!Existeusuario) return false;
 
-                var expiraCodigo = DateTime.Now.AddMinutes(10);
+                var expiraCodigo = DateTime.UtcNow.AddMinutes(10);
 
                 bool codigoGuardado = _usuarioService.GuardarCodigoVerificacion(email, codigoVerificacion, expiraCodigo);
 
