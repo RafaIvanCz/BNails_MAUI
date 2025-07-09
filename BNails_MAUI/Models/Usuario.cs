@@ -13,6 +13,6 @@ namespace BNails_MAUI.Models
         public string? Email { get; set; }
         public string? Password { get; set; }
         public string? CodigoRecuperacion { get; set; }
-        public DateTime? CodigoRecuExpira { get; set; }
+        public DateTime? CodigoRecuExpiro { get; set; }
     }
 }

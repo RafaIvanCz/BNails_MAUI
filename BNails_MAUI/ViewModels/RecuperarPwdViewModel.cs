@@ -105,7 +105,7 @@ namespace BNails_MAUI.ViewModels
 
             if(emailEnviado)
             {
-                await _dialogService.MostrarAlertaAsync("Email enviado con éxito!","Revisá tu correo electrónico para ver el código de 4 dígitos que se te envió.");
+                await _dialogService.MostrarAlertaAsync("Código enviado con éxito!","Revisá tu correo electrónico para ver el código de 4 dígitos que se te envió.");
                 await Shell.Current.GoToAsync($"ValidarCodigo?email={Email}");
             } else
             {

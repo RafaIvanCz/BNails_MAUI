@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:BNails_MAUI.ViewModels"
+             xmlns:converters="clr-namespace:BNails_MAUI.Converters"
              x:Class="BNails_MAUI.Views.ValidarCodigo"
              x:DataType="vm:ValidarCodigoViewModel"
              Shell.NavBarIsVisible="False"
@@ -29,8 +30,24 @@
 
                 <Button
                     Text="Continuar"
-                    Style="{ StaticResource BotonesInicio }"
-                    Command="{Binding ConfirmarCodigoCommand}" />
+                    Style="{StaticResource BotonesInicio}"
+                    Command="{Binding ConfirmarCodigoCommand}"
+                    IsEnabled="{Binding UnenabledBtn}"
+                    Background="{Binding UnenabledBtn, Converter={StaticResource BoolToBrushConverter}}" />
+
+                <Label
+                    Text="Reenviar código"
+                    TextTransform="Uppercase"
+                    HorizontalOptions="Center"
+                    TextDecorations="Underline"
+                    TextColor="Blue"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    IsVisible="{ Binding ReenviarCodigo }">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ReenviarCodigoCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
 
                 <Label
                     Text="Volver al Login"

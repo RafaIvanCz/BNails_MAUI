@@ -451,7 +451,6 @@
     <Style x:Key="BotonesInicio" TargetType="Button">
         <Setter Property="CharacterSpacing" Value="2" />
         <Setter Property="FontAttributes" Value="Bold" />
-        <Setter Property="BackgroundColor" Value="DarkBlue" />
         <Setter Property="TextColor" Value="White" />
         <Setter Property="FontSize" Value="Subtitle" />
         <Setter Property="Margin" Value="0, 10, 0, 30" />

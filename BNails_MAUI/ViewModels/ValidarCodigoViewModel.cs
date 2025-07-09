@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -21,35 +22,42 @@ namespace BNails_MAUI.ViewModels
         public string? Email { get; set; }
 
         private readonly IDialogService _dialogService;
-        private readonly UsuarioService usuarioService;
+        private readonly UsuarioService _usuarioService;
+        private readonly IEmailService _emailService;
 
-        private string? codigo;
-
+        private string? codigoIngresado;
         public string? CodigoIngresado
         {
-            get => codigo;
+            get => codigoIngresado;
             set
             {
-                codigo = value;
+                codigoIngresado = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(UnenabledBtn));
             }
         }
 
-        public ICommand ConfirmarCodigoCommand { get; }
+        public bool UnenabledBtn => !String.IsNullOrWhiteSpace(codigoIngresado) && codigoIngresado.Length == 4;
+        public bool ReenviarCodigo;
 
-        public ValidarCodigoViewModel(IDialogService dialogService, UsuarioService usuarioService)
+        public ICommand ConfirmarCodigoCommand { get; }
+        public ICommand ReenviarCodigoCommand { get; }
+
+        public ValidarCodigoViewModel(IDialogService dialogService, UsuarioService usuarioService, IEmailService emailService)
         {
             _dialogService = dialogService;
-            this.usuarioService = usuarioService;
+            _usuarioService = usuarioService;
+            _emailService = emailService;
 
-            ConfirmarCodigoCommand = new Command(ValidarCodigo);
+            ConfirmarCodigoCommand = new Command(OnValidarCodigo);
+            ReenviarCodigoCommand = new Command(OnReenviarCodigo);
         }
 
         private int intentos = 3;
 
-        public async void ValidarCodigo()
+        public async void OnValidarCodigo()
         { 
-            Usuario? usuario = usuarioService.GetUsuarioPorEmail(Email);
+            Usuario? usuario = _usuarioService.GetUsuarioPorEmail(Email);
 
             if(usuario == null)
             {
@@ -64,7 +72,6 @@ namespace BNails_MAUI.ViewModels
                 if(intentos <= 0)
                 {
                     await _dialogService.MostrarAlertaAsync("Atención!","Superaste el número máximo de intentos. Por favor, volvé a solicitar el código de recuperación.");
-                    await Shell.Current.GoToAsync("RecuperarPwd");
                     return;
                 }
 
@@ -72,14 +79,30 @@ namespace BNails_MAUI.ViewModels
                 return;                
             }
 
-            if(usuario.CodigoRecuExpira < DateTime.Now)
+            if(usuario.CodigoRecuExpiro < DateTime.Now)
             {
-                await _dialogService.MostrarAlertaAsync("Atención!","El código ingresado ha expirado. Por favor, volvé a solicitar el código de recuperación.");
-                await Shell.Current.GoToAsync("RecuperarPwd");
+                await _dialogService.MostrarAlertaAsync("Atención!","El código ingresado ha expirado. Por favor, volvé a solicitarlo.");
                 return;
             }
 
             await Shell.Current.GoToAsync($"ResetPwd?email={Email}");
+        }
+
+        public async void OnReenviarCodigo()
+        {
+            string? nombreUsuario = _usuarioService?.GetUsuarioPorEmail(Email).Nombre;
+            string codigoVerificacion = _emailService.GenerarCodigoVerificacion();
+
+            bool codigoReenviado = await _emailService.EnviarEmailCodigoVerificacion(Email,codigoVerificacion,nombreUsuario);
+
+            if(codigoReenviado)
+            {
+                await _dialogService.MostrarAlertaAsync("Código reenviado con éxito!","Revisá tu correo electrónico para ver el código de 4 dígitos que se te envió.");
+                return;
+            } else
+            {
+                await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al enviar el email. Intentá nuevamente.");
+            }
         }
 
         private void OnPropertyChanged([CallerMemberName] string name = null) =>
