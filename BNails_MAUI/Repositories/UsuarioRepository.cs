@@ -65,7 +65,7 @@ namespace BNails_MAUI.Repositories
                     Email = reader.GetString("email"),
                     Password = reader.GetString("password"),
                     CodigoRecuperacion = reader.IsDBNull(idxCodigo) ? null : reader.GetString(idxCodigo),
-                    CodigoRecuExpira = reader.IsDBNull(idxFecha) ? null : reader.GetDateTime(idxFecha).ToLocalTime()
+                    CodigoRecuExpiro = reader.IsDBNull(idxFecha) ? null : reader.GetDateTime(idxFecha).ToLocalTime()
                 };
             }
 

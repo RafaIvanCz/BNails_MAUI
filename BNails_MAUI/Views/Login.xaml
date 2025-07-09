@@ -69,6 +69,7 @@
 
                 <Button
                     Text="Ingresar"
+                    BackgroundColor="DarkBlue"
                     Style="{ StaticResource BotonesInicio }"
                     Command="{ Binding LoginCommand }"/>
 

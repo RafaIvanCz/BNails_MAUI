@@ -13,17 +13,23 @@ public partial class ValidarCodigo : ContentPage
 
         var dialogService = services?.GetService<IDialogService>();
         var usuarioService = services?.GetService<UsuarioService>();
+        var emailService = services?.GetService<IEmailService>();
 
-        if(dialogService == null || usuarioService == null)
+        if(dialogService == null || usuarioService == null || emailService == null)
         {
             throw new Exception("No se pudieron obtener los servicios necesarios.");
         }
 
-        BindingContext = new ValidarCodigoViewModel(dialogService,usuarioService);
+        BindingContext = new ValidarCodigoViewModel(dialogService,usuarioService,emailService);
     }
 
     private async void VolverLogin_Tapped(object sender,TappedEventArgs e)
     {
 		await Shell.Current.GoToAsync("..");
+    }
+
+    private void ReenviarCodigo_Tapped(object sender,TappedEventArgs e)
+    {
+
     }
 }
