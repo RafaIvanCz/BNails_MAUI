@@ -25,11 +25,6 @@ public partial class ValidarCodigo : ContentPage
 
     private async void VolverLogin_Tapped(object sender,TappedEventArgs e)
     {
-		await Shell.Current.GoToAsync("..");
-    }
-
-    private void ReenviarCodigo_Tapped(object sender,TappedEventArgs e)
-    {
-
+		await Shell.Current.GoToAsync("//Login");
     }
 }

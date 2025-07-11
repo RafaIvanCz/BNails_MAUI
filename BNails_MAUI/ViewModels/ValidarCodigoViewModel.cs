@@ -25,6 +25,9 @@ namespace BNails_MAUI.ViewModels
         private readonly UsuarioService _usuarioService;
         private readonly IEmailService _emailService;
 
+        private int intentosIngresoCod = 3;
+        private bool codigoVencido = false;
+
         private string? codigoIngresado;
         public string? CodigoIngresado
         {
@@ -34,11 +37,14 @@ namespace BNails_MAUI.ViewModels
                 codigoIngresado = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(UnenabledBtn));
+                OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
             }
         }
 
-        public bool UnenabledBtn => !String.IsNullOrWhiteSpace(codigoIngresado) && codigoIngresado.Length == 4;
-        public bool ReenviarCodigo;
+        public bool UnenabledBtn => !String.IsNullOrWhiteSpace(codigoIngresado) && codigoIngresado.Length == 4 && !codigoVencido;
+        public bool UnenabledReenviarCodigoLbl => codigoVencido;
+        public Color LabelTextColor => codigoVencido ? Colors.DarkBlue : Colors.Gray;
+
 
         public ICommand ConfirmarCodigoCommand { get; }
         public ICommand ReenviarCodigoCommand { get; }
@@ -53,8 +59,6 @@ namespace BNails_MAUI.ViewModels
             ReenviarCodigoCommand = new Command(OnReenviarCodigo);
         }
 
-        private int intentos = 3;
-
         public async void OnValidarCodigo()
         { 
             Usuario? usuario = _usuarioService.GetUsuarioPorEmail(Email);
@@ -67,21 +71,27 @@ namespace BNails_MAUI.ViewModels
 
             if(CodigoIngresado != usuario.CodigoRecuperacion)
             {
-                intentos--;
+                intentosIngresoCod--;
 
-                if(intentos <= 0)
+                if(intentosIngresoCod <= 0)
                 {
                     await _dialogService.MostrarAlertaAsync("Atención!","Superaste el número máximo de intentos. Por favor, volvé a solicitar el código de recuperación.");
+                    codigoVencido = true;
+                    OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
+                    OnPropertyChanged(nameof(LabelTextColor));
                     return;
                 }
 
-                await _dialogService.MostrarAlertaAsync("Atención!",$"El código ingresado no coincide con el enviado a tu correo electrónico. Te quedan {intentos} intentos.");
+                await _dialogService.MostrarAlertaAsync("Atención!",$"El código ingresado no coincide con el enviado a tu correo electrónico. Te quedan {intentosIngresoCod} intentos.");
                 return;                
             }
 
             if(usuario.CodigoRecuExpiro < DateTime.Now)
             {
                 await _dialogService.MostrarAlertaAsync("Atención!","El código ingresado ha expirado. Por favor, volvé a solicitarlo.");
+                codigoVencido = true;
+                OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
+                OnPropertyChanged(nameof(LabelTextColor));
                 return;
             }
 
@@ -97,7 +107,12 @@ namespace BNails_MAUI.ViewModels
 
             if(codigoReenviado)
             {
-                await _dialogService.MostrarAlertaAsync("Código reenviado con éxito!","Revisá tu correo electrónico para ver el código de 4 dígitos que se te envió.");
+                await _dialogService.MostrarAlertaAsync("Código reenviado con éxito!","Revisá tu correo electrónico.");
+                codigoVencido = false;
+                intentosIngresoCod = 3;
+                OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
+                OnPropertyChanged(nameof(LabelTextColor));
+                OnPropertyChanged(nameof(UnenabledBtn));
                 return;
             } else
             {
