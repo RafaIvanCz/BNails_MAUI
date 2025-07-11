@@ -10,15 +10,15 @@ namespace BNails_MAUI.Converters
     public class BoolToBrushConverter : IValueConverter
     {
         public Brush ActiveBrush { get; set; } = Colors.DarkBlue;
-        public Brush UnableBrush { get; set; } = Colors.Gray;
+        public Brush UnenableBrush { get; set; } = Colors.Gray;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool isActive)
             {
-                return isActive ? ActiveBrush : UnableBrush;
+                return isActive ? ActiveBrush : UnenableBrush;
             }
-            return UnableBrush;
+            return UnenableBrush;
         }
 
         public object ConvertBack(object value,Type targetType,object parameter,CultureInfo culture)

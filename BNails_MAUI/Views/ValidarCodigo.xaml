@@ -40,10 +40,10 @@
                     TextTransform="Uppercase"
                     HorizontalOptions="Center"
                     TextDecorations="Underline"
-                    TextColor="Blue"
                     FontAttributes="Bold"
                     FontSize="Medium"
-                    IsVisible="{ Binding ReenviarCodigo }">
+                    IsEnabled="{ Binding UnenabledReenviarCodigoLbl }"
+                    TextColor="{Binding LabelTextColor}" >
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ReenviarCodigoCommand}" />
                     </Label.GestureRecognizers>

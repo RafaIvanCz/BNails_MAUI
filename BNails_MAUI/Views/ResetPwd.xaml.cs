@@ -22,9 +22,9 @@ public partial class ResetPwd : ContentPage
         loadingPopup.BindingContext = BindingContext;
     }
 
-    private async void VolverResetPwd_Tapped(object sender,TappedEventArgs e)
+    private async void VolverLogin_Tapped(object sender,TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync("//Login");
     }
 
     private void OnShowPasswordCheckBox_ResetPwd(object sender,CheckedChangedEventArgs e)

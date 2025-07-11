@@ -13,7 +13,7 @@
                 <ResourceDictionary>
                     <converters:BoolToBrushConverter x:Key="BoolToBrushConverter"
                                          ActiveBrush="DarkBlue"
-                                         UnableBrush="Gray" />
+                                         UnenableBrush="Gray" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

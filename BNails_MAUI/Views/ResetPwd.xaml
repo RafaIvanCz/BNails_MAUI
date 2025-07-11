@@ -84,7 +84,7 @@
                     Text="Volver al Inicio de Sesión"
                     Style="{ StaticResource LabelInicio }">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="VolverResetPwd_Tapped"/>
+                        <TapGestureRecognizer Tapped="VolverLogin_Tapped"/>
                     </Label.GestureRecognizers>
                 </Label>
 

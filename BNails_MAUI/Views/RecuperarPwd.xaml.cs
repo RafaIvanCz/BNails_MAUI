@@ -26,6 +26,6 @@ public partial class RecuperarPwd : ContentPage
 
     private async void VolverLogin_Tapped(object sender,TappedEventArgs e)
     {
-		await Shell.Current.GoToAsync("..");
+		await Shell.Current.GoToAsync("//Login");
     }
 }
