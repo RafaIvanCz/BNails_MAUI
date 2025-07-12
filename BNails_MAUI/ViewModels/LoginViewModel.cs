@@ -24,6 +24,7 @@ namespace BNails_MAUI.ViewModels
 
         private string? email;
         private string? password;
+        private bool isCargando;
 
         public string? Email
         {
@@ -52,6 +53,19 @@ namespace BNails_MAUI.ViewModels
             }
         }
 
+        public bool IsCargando
+        {
+            get => isCargando;
+            set
+            {
+                if(isCargando != value)
+                {
+                    isCargando = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public ICommand LoginCommand { get; }
 
         public LoginViewModel(IDialogService dialogService, IUsuarioRepository usuarioRepository, UsuarioService usuarioService)
@@ -65,33 +79,42 @@ namespace BNails_MAUI.ViewModels
 
         private async void OnLogin()
         {
-            if(String.IsNullOrEmpty(Email) || String.IsNullOrEmpty(Password))
-            {
-                await _dialogService.MostrarAlertaAsync("Atención!", "Los campos Email y Contraseña no pueden estar vacíos");
-                return;
-            }
+            IsCargando = true;
 
-            if(!Regex.IsMatch(Email,@"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            try
             {
-                await _dialogService.MostrarAlertaAsync("Formato de Email incorrecto!","Formato correcto: 'ejemplo@mail.com'");
-                return;
-            }
+                if(String.IsNullOrEmpty(Email) || String.IsNullOrEmpty(Password))
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","Los campos Email y Contraseña no pueden estar vacíos");
+                    return;
+                }
 
-            if(!_usuarioService.ExisteUsuarioPorEmail(Email))
-            {
-                await _dialogService.MostrarAlertaAsync("Atención!","El correo electrónico no está registrado");
-                return;
-            }
+                if(!Regex.IsMatch(Email,@"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    await _dialogService.MostrarAlertaAsync("Formato de Email incorrecto!","Formato correcto: 'ejemplo@mail.com'");
+                    return;
+                }
 
-            string? passwordGuardada = _usuarioRepository.ObtenerUsuarioPorEmail(Email)?.Password;
+                if(!_usuarioService.ExisteUsuarioPorEmail(Email))
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","El correo electrónico no está registrado");
+                    return;
+                }
 
-            if(!SeguridadHelper.VerificarPassword(Password,passwordGuardada))
+                string? passwordGuardada = _usuarioRepository.ObtenerUsuarioPorEmail(Email)?.Password;
+
+                if(!SeguridadHelper.VerificarPassword(Password,passwordGuardada))
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","Contraseña incorrecta!");
+                    return;
+                } else
+                {
+                    await _dialogService.MostrarAlertaAsync("Felicidades!","Ingresaste!");
+                }
+
+            } finally
             {
-                await _dialogService.MostrarAlertaAsync("Atención!","Contraseña incorrecta!");
-                return;
-            } else
-            {
-                await _dialogService.MostrarAlertaAsync("Felicidades!","Ingresaste!");
+                IsCargando = false;
             }
         }
 

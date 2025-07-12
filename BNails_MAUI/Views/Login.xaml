@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BNails_MAUI.Views.Login"
              xmlns:vm="clr-namespace:BNails_MAUI.ViewModels"
+             xmlns:popup="clr-namespace:BNails_MAUI.Views.Popups"
              x:DataType="vm:LoginViewModel"
              Shell.NavBarIsVisible="False"
              Title="Login">
@@ -104,6 +105,8 @@
 
             </VerticalStackLayout>
         </ScrollView>
+
+        <popup:LoadingPopup x:Name="loadingPopup" />
 
     </Grid>
     

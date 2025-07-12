@@ -24,6 +24,7 @@ namespace BNails_MAUI.ViewModels
         private string? email;
         private bool comenzoAEscribirEmail;
         private bool emailCorrecto;
+        private bool isCargando;
 
         public string? Email
         {
@@ -71,6 +72,19 @@ namespace BNails_MAUI.ViewModels
             }
         }
 
+        public bool IsCargando
+        {
+            get => isCargando;
+            set
+            {
+                if(isCargando != value)
+                {
+                    isCargando = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool MostrarFormatoEmail => ComenzoAEscribirEmail && !EmailCorrecto;
 
         public ICommand RecuperarPwdCommand { get; }
@@ -86,31 +100,40 @@ namespace BNails_MAUI.ViewModels
 
         public async void OnRecuperarPwd()
         {
-            if(!EmailCorrecto)
-            {
-                await _dialogService.MostrarAlertaAsync("Formato de Email incorrecto!", "Formato correcto: 'ejemplo@mail.com'");
-                return;
-            }
+            IsCargando = true;
 
-            if(!_usuarioService.ExisteUsuarioPorEmail(Email))
+            try
             {
-                await _dialogService.MostrarAlertaAsync("Atención!", "El correo electrónico no está registrado");
-                return;
-            }
+                if(!EmailCorrecto)
+                {
+                    await _dialogService.MostrarAlertaAsync("Formato de Email incorrecto!","Formato correcto: 'ejemplo@mail.com'");
+                    return;
+                }
 
-            string codigoVerificacion = _emailService.GenerarCodigoVerificacion();
-            string? nombreUsuario = _usuarioService.GetUsuarioPorEmail(Email).Nombre;
+                if(!_usuarioService.ExisteUsuarioPorEmail(Email))
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","El correo electrónico no está registrado");
+                    return;
+                }
 
-            bool emailEnviado = await _emailService.EnviarEmailCodigoVerificacion(Email, codigoVerificacion, nombreUsuario);
+                string codigoVerificacion = _emailService.GenerarCodigoVerificacion();
+                string? nombreUsuario = _usuarioService.GetUsuarioPorEmail(Email).Nombre;
 
-            if(emailEnviado)
+                bool emailEnviado = await _emailService.EnviarEmailCodigoVerificacion(Email,codigoVerificacion,nombreUsuario);
+
+                if(emailEnviado)
+                {
+                    await _dialogService.MostrarAlertaAsync("Código enviado con éxito!","Revisá tu correo electrónico para ver el código de 4 dígitos que se te envió.");
+                    await Shell.Current.GoToAsync($"ValidarCodigo?email={Email}");
+                } else
+                {
+                    await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al enviar el email. Intentá nuevamente.");
+                }
+
+            } finally
             {
-                await _dialogService.MostrarAlertaAsync("Código enviado con éxito!","Revisá tu correo electrónico para ver el código de 4 dígitos que se te envió.");
-                await Shell.Current.GoToAsync($"ValidarCodigo?email={Email}");
-            } else
-            {
-                await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al enviar el email. Intentá nuevamente.");
-            }
+                IsCargando = true;
+            }            
         }
 
         private void ValidarEmail()

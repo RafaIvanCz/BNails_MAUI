@@ -2,48 +2,56 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:BNails_MAUI.ViewModels"
+             xmlns:popup="clr-namespace:BNails_MAUI.Views.Popups"
              x:Class="BNails_MAUI.Views.RecuperarPwd"
              x:DataType="vm:RecuperarPwdViewModel"
              Shell.NavBarIsVisible="False"
              Title="RecuperarPwd">
 
-    <ScrollView HorizontalOptions="Center">
+    <Grid>
 
-        <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
-            
-            <Label 
-                Text="Recuperar contraseña"
-                Margin="0,0,0,55"
-                Style="{ StaticResource LabelHeaderInicio }" />
-            
-            <Entry 
-                Placeholder="Ingresá tu correo electrónico"
-                PlaceholderColor="{ StaticResource Gray900 }"
-                Keyboard="Email"
-                Margin="0,10,0,0"
-                Text="{Binding Email, Mode=TwoWay}"/>
+        <ScrollView HorizontalOptions="Center">
 
-            <Label
-                Text="Formato correcto: 'ejemplo@mail.com'"
-                TextColor="Red"
-                Margin="0,0,0,0"
-                IsVisible="{Binding MostrarFormatoEmail}" />
-            
-            <Button 
-                Text="Continuar"
-                Margin="0,30,0,50"
-                Style="{ StaticResource BotonesInicio }"
-                Command="{ Binding RecuperarPwdCommand }"/>
-            
-            <Label
-                Text="Volver al Inicio de Sesión"
-                Style="{ StaticResource LabelInicio }">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="VolverLogin_Tapped"/>
-                </Label.GestureRecognizers>
-            </Label>
+            <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
 
-        </VerticalStackLayout>
+                <Label 
+            Text="Recuperar contraseña"
+            Margin="0,0,0,55"
+            Style="{ StaticResource LabelHeaderInicio }" />
 
-    </ScrollView>
+                <Entry 
+            Placeholder="Ingresá tu correo electrónico"
+            PlaceholderColor="{ StaticResource Gray900 }"
+            Keyboard="Email"
+            Margin="0,10,0,0"
+            Text="{Binding Email, Mode=TwoWay}"/>
+
+                <Label
+            Text="Formato correcto: 'ejemplo@mail.com'"
+            TextColor="Red"
+            Margin="0,0,0,0"
+            IsVisible="{Binding MostrarFormatoEmail}" />
+
+                <Button 
+            Text="Continuar"
+            Margin="0,30,0,50"
+            Style="{ StaticResource BotonesInicio }"
+            Command="{ Binding RecuperarPwdCommand }"/>
+
+                <Label
+            Text="Volver al Inicio de Sesión"
+            Style="{ StaticResource LabelInicio }">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="VolverLogin_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+        
+        <popup:LoadingPopup x:Name="loadingPopup" />
+
+    </Grid>
+    
 </ContentPage>

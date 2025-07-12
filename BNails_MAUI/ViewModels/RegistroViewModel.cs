@@ -37,6 +37,8 @@ namespace BNails_MAUI.ViewModels
         private bool tieneNumero;
         private bool coincidenPasswords;
 
+        private bool isCargando;
+
         public string? Nombre
         {
             get => nombre;
@@ -215,6 +217,19 @@ namespace BNails_MAUI.ViewModels
             }
         }
 
+        public bool IsCargando
+        {
+            get => isCargando;
+            set
+            {
+                if(isCargando != value)
+                {
+                    isCargando = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         // Mostrar validaciones solo si el usuario ya empezó a escribir
         public bool MostrarFormatoEmail => ComenzoAEscribirEmail && !EmailCorrecto;
         public bool MostrarMinCaracteres => ComenzoAEscribirPassword && !CumpleMinCaracteres;
@@ -235,58 +250,67 @@ namespace BNails_MAUI.ViewModels
 
         private async void OnRegistrar()
         {
-            if(string.IsNullOrWhiteSpace(Nombre) || string.IsNullOrWhiteSpace(Email) ||
-                string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(RePassword))
+            IsCargando = true;
+
+            try
             {
-                await _dialogService.MostrarAlertaAsync("Atención!","Completá todos los campos");
-                return;
+                if(string.IsNullOrWhiteSpace(Nombre) || string.IsNullOrWhiteSpace(Email) ||
+                    string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(RePassword))
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","Completá todos los campos");
+                    return;
+                }
+
+                if(!EmailCorrecto)
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","Correo no válido");
+                    return;
+                }
+
+                if(_usuarioRepository.ExisteUsuarioPorEmail(Email))
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","El correo ya se encuentra registrado en el sistema");
+                    return;
+                }
+
+                if(!CumpleMinCaracteres || !TieneMayuscula || !TieneNumero)
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","La contraseña no cumple las condiciones de seguridad");
+                    return;
+                }
+
+                if(!CoincidenPasswords)
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","Las contraseñas no coinciden");
+                    RePassword = string.Empty;
+                    return;
+                }
+
+                string hashedPassword = Helpers.SeguridadHelper.HashPassword(Password);
+
+                var usuario = new Usuario
+                {
+                    Nombre = Nombre,
+                    Email = Email,
+                    Password = hashedPassword
+                };
+
+                var usuarioService = new UsuarioService();
+                bool registroExitoso = usuarioService.RegistrarUsuario(usuario);
+
+                if (registroExitoso)
+                {
+                    await _dialogService.MostrarAlertaAsync("Felicidades!", "Usuario guardado con éxito!");
+                    await Shell.Current.GoToAsync("..");
+                } else
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!", "No se pudo guardar el usuario. Intente nuevamente.");
+                }
+            }finally
+            {
+                IsCargando = true;
             }
 
-            if(!EmailCorrecto)
-            {
-                await _dialogService.MostrarAlertaAsync("Atención!","Correo no válido");
-                return;
-            }
-
-            if(_usuarioRepository.ExisteUsuarioPorEmail(Email))
-            {
-                await _dialogService.MostrarAlertaAsync("Atención!","El correo ya se encuentra registrado en el sistema");
-                return;
-            }
-
-            if(!CumpleMinCaracteres || !TieneMayuscula || !TieneNumero)
-            {
-                await _dialogService.MostrarAlertaAsync("Atención!","La contraseña no cumple las condiciones de seguridad");
-                return;
-            }
-
-            if(!CoincidenPasswords)
-            {
-                await _dialogService.MostrarAlertaAsync("Atención!","Las contraseñas no coinciden");
-                RePassword = string.Empty;
-                return;
-            }
-
-            string hashedPassword = Helpers.SeguridadHelper.HashPassword(Password);
-
-            var usuario = new Usuario
-            {
-                Nombre = Nombre,
-                Email = Email,
-                Password = hashedPassword
-            };
-
-            var usuarioService = new UsuarioService();
-            bool registroExitoso = usuarioService.RegistrarUsuario(usuario);
-
-            if (registroExitoso)
-            {
-                await _dialogService.MostrarAlertaAsync("Felicidades!", "Usuario guardado con éxito!");
-                await Shell.Current.GoToAsync("..");
-            } else
-            {
-                await _dialogService.MostrarAlertaAsync("Atención!", "No se pudo guardar el usuario. Intente nuevamente.");
-            }
         }
 
         private void ValidarEmail()

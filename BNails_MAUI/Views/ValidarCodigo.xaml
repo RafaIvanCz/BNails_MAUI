@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:BNails_MAUI.ViewModels"
              xmlns:converters="clr-namespace:BNails_MAUI.Converters"
+             xmlns:popup="clr-namespace:BNails_MAUI.Views.Popups"
              x:Class="BNails_MAUI.Views.ValidarCodigo"
              x:DataType="vm:ValidarCodigoViewModel"
              Shell.NavBarIsVisible="False"
@@ -61,7 +62,9 @@
             </VerticalStackLayout>
             
         </ScrollView>
-        
+
+        <popup:LoadingPopup x:Name="loadingPopup" />
+
     </Grid>
     
 </ContentPage>

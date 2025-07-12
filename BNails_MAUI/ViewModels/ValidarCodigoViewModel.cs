@@ -26,7 +26,9 @@ namespace BNails_MAUI.ViewModels
         private readonly IEmailService _emailService;
 
         private int intentosIngresoCod = 3;
+
         private bool codigoVencido = false;
+        private bool isCargando;
 
         private string? codigoIngresado;
         public string? CodigoIngresado
@@ -38,6 +40,16 @@ namespace BNails_MAUI.ViewModels
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(UnenabledBtn));
                 OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
+            }
+        }
+
+        public bool IsCargando
+        {
+            get => isCargando;
+            set
+            {
+                isCargando = value;
+                OnPropertyChanged();
             }
         }
 
@@ -60,63 +72,81 @@ namespace BNails_MAUI.ViewModels
         }
 
         public async void OnValidarCodigo()
-        { 
-            Usuario? usuario = _usuarioService.GetUsuarioPorEmail(Email);
+        {
+            isCargando = true;
 
-            if(usuario == null)
+            try
             {
-                await _dialogService.MostrarAlertaAsync("Atención!","No se encontró el usuario.");
-                return;
-            }
+                Usuario? usuario = _usuarioService.GetUsuarioPorEmail(Email);
 
-            if(CodigoIngresado != usuario.CodigoRecuperacion)
-            {
-                intentosIngresoCod--;
-
-                if(intentosIngresoCod <= 0)
+                if(usuario == null)
                 {
-                    await _dialogService.MostrarAlertaAsync("Atención!","Superaste el número máximo de intentos. Por favor, volvé a solicitar el código de recuperación.");
+                    await _dialogService.MostrarAlertaAsync("Atención!","No se encontró el usuario.");
+                    return;
+                }
+
+                if(CodigoIngresado != usuario.CodigoRecuperacion)
+                {
+                    intentosIngresoCod--;
+
+                    if(intentosIngresoCod <= 0)
+                    {
+                        await _dialogService.MostrarAlertaAsync("Atención!","Superaste el número máximo de intentos. Por favor, volvé a solicitar el código de recuperación.");
+                        codigoVencido = true;
+                        OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
+                        OnPropertyChanged(nameof(LabelTextColor));
+                        return;
+                    }
+
+                    await _dialogService.MostrarAlertaAsync("Atención!",$"El código ingresado no coincide con el enviado a tu correo electrónico. Te quedan {intentosIngresoCod} intentos.");
+                    return;                
+                }
+
+                if(usuario.CodigoRecuExpiro < DateTime.Now)
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","El código ingresado ha expirado. Por favor, volvé a solicitarlo.");
                     codigoVencido = true;
                     OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
                     OnPropertyChanged(nameof(LabelTextColor));
                     return;
                 }
 
-                await _dialogService.MostrarAlertaAsync("Atención!",$"El código ingresado no coincide con el enviado a tu correo electrónico. Te quedan {intentosIngresoCod} intentos.");
-                return;                
-            }
+                await Shell.Current.GoToAsync($"ResetPwd?email={Email}");
 
-            if(usuario.CodigoRecuExpiro < DateTime.Now)
+            }finally
             {
-                await _dialogService.MostrarAlertaAsync("Atención!","El código ingresado ha expirado. Por favor, volvé a solicitarlo.");
-                codigoVencido = true;
-                OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
-                OnPropertyChanged(nameof(LabelTextColor));
-                return;
+                isCargando = false;
             }
-
-            await Shell.Current.GoToAsync($"ResetPwd?email={Email}");
         }
 
         public async void OnReenviarCodigo()
         {
-            string? nombreUsuario = _usuarioService?.GetUsuarioPorEmail(Email).Nombre;
-            string codigoVerificacion = _emailService.GenerarCodigoVerificacion();
+            isCargando = true;
 
-            bool codigoReenviado = await _emailService.EnviarEmailCodigoVerificacion(Email,codigoVerificacion,nombreUsuario);
+            try
+            {
+                string? nombreUsuario = _usuarioService?.GetUsuarioPorEmail(Email).Nombre;
+                string codigoVerificacion = _emailService.GenerarCodigoVerificacion();
 
-            if(codigoReenviado)
+                bool codigoReenviado = await _emailService.EnviarEmailCodigoVerificacion(Email,codigoVerificacion,nombreUsuario);
+
+                if(codigoReenviado)
+                {
+                    await _dialogService.MostrarAlertaAsync("Código reenviado con éxito!","Revisá tu correo electrónico.");
+                    codigoVencido = false;
+                    intentosIngresoCod = 3;
+                    OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
+                    OnPropertyChanged(nameof(LabelTextColor));
+                    OnPropertyChanged(nameof(UnenabledBtn));
+                    return;
+                } else
+                {
+                    await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al enviar el email. Intentá nuevamente.");
+                }
+
+            }finally
             {
-                await _dialogService.MostrarAlertaAsync("Código reenviado con éxito!","Revisá tu correo electrónico.");
-                codigoVencido = false;
-                intentosIngresoCod = 3;
-                OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));
-                OnPropertyChanged(nameof(LabelTextColor));
-                OnPropertyChanged(nameof(UnenabledBtn));
-                return;
-            } else
-            {
-                await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al enviar el email. Intentá nuevamente.");
+                isCargando = false;
             }
         }
 
