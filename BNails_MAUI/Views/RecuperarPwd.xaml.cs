@@ -22,6 +22,7 @@ public partial class RecuperarPwd : ContentPage
         }
 
         BindingContext = new RecuperarPwdViewModel(dialogService,usuarioService,emailService);
+        loadingPopup.BindingContext = BindingContext;
     }
 
     private async void VolverLogin_Tapped(object sender,TappedEventArgs e)

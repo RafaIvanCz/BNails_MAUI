@@ -22,6 +22,7 @@ public partial class Login : ContentPage
         }
 
         BindingContext = new LoginViewModel(dialogService, usuarioRepo, usuarioService);
+        loadingPopup.BindingContext = BindingContext;
     }
 
     private async void Registro_Tapped(object sender,TappedEventArgs e)
