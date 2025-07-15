@@ -111,6 +111,7 @@ namespace BNails_MAUI.ViewModels
                     return;
                 }
 
+                await _dialogService.MostrarAlertaAsync("Código correcto!","Ya podés actualizar tu contraseña.");
                 await Shell.Current.GoToAsync($"ResetPwd?email={Email}");
 
             }finally

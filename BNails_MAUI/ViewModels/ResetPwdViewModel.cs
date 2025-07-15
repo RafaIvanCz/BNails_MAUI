@@ -192,13 +192,19 @@ namespace BNails_MAUI.ViewModels
             {
                 if(String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(RePassword))
                 {
-                    await _dialogService.MostrarAlertaAsync("Atención!","Completá todos los campos");
+                    await _dialogService.MostrarAlertaAsync("Atención!","Completá todos los campos.");
                     return;
                 }
 
                 if(!Regex.IsMatch(Password,@"^(?=.*[A-Z])(?=.*\d).{8,}$"))
                 {
-                    await _dialogService.MostrarAlertaAsync("Atención!","Correo no válido");
+                    await _dialogService.MostrarAlertaAsync("Atención!","La contraseña debe cumplir las condiciones obligatorias.");
+                    return;
+                }
+
+                if(Password != RePassword)
+                {
+                    await _dialogService.MostrarAlertaAsync("Atención!","Las contraseñas no coinciden.");
                     return;
                 }
 
@@ -211,15 +217,16 @@ namespace BNails_MAUI.ViewModels
                     actualizarUsuario.Password = hashedPassword;
                 }
 
-                bool actualizado = _usuarioService.ActualizarPwdUsuario(actualizarUsuario);
+                bool usuarioActualizado = _usuarioService.ActualizarPwdUsuario(actualizarUsuario);
 
-                if(actualizado)
+                if(usuarioActualizado)
                 {
-                    await _dialogService.MostrarAlertaAsync("Éxito","La contraseña fue actualizada correctamente");
+                    await _dialogService.MostrarAlertaAsync("Actualización exitosa!","Ya podés ingresar con la nueva contraseña.");
                     await Shell.Current.GoToAsync("//Login");
                 } else
                 {
-                    await _dialogService.MostrarAlertaAsync("Error","Ocurrió un error al actualizar la contraseña");
+                    await _dialogService.MostrarAlertaAsync("Atención!","Ocurrió un error al actualizar la contraseña. Intentalo nuevamente.");
+                    await Shell.Current.GoToAsync("//Login");
                 }
 
             } finally

@@ -300,8 +300,8 @@ namespace BNails_MAUI.ViewModels
 
                 if (registroExitoso)
                 {
-                    await _dialogService.MostrarAlertaAsync("Felicidades!", "Usuario guardado con éxito!");
-                    await Shell.Current.GoToAsync("..");
+                    await _dialogService.MostrarAlertaAsync("Felicidades!", "Usuario creado con éxito!");
+                    await Shell.Current.GoToAsync("//Login");
                 } else
                 {
                     await _dialogService.MostrarAlertaAsync("Atención!", "No se pudo guardar el usuario. Intente nuevamente.");
