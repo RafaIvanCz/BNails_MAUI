@@ -93,7 +93,8 @@
                 </StackLayout>
 
                 <Button
-                    Text="Continuar"
+                    Text="Crear usuario"
+                    BackgroundColor="DarkBlue"
                     Style="{ StaticResource BotonesInicio }"
                     Command="{Binding RegistrarCommand}" />
 
