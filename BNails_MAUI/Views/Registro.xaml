@@ -12,11 +12,16 @@
 
         <ScrollView HorizontalOptions="Center">
 
-            <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
+            <VerticalStackLayout
+                Spacing="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Padding="30, 0"
+                WidthRequest="350">
 
                 <Label
                     Text="Registrate"
-                    Margin="0,0,0,25"
+                    Margin="0,0,0,35"
                     Style="{StaticResource LabelHeaderInicio}" />
 
                 <Entry
@@ -42,8 +47,7 @@
                     PlaceholderColor="{StaticResource Gray900}"
                     IsPassword="True"
                     Text="{Binding Password}" />
-
-                <!-- Validaciones de contraseña -->
+                
                 <StackLayout Margin="0,-20,0,0">
                     <Label
                         Text="❌ Mínimo 8 caracteres"
@@ -75,7 +79,11 @@
                     Margin="0,-20,0,0"
                     IsVisible="{Binding MostrarCoincidencia}" />
 
-                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
+                <StackLayout
+                    Orientation="Horizontal"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End">
+                    
                     <Label
                         Text="Mostrar contraseña"
                         TextColor="DarkBlue"
@@ -95,6 +103,7 @@
                 <Button
                     Text="Crear usuario"
                     BackgroundColor="DarkBlue"
+                    Margin="0,30"
                     Style="{ StaticResource BotonesInicio }"
                     Command="{Binding RegistrarCommand}" />
 

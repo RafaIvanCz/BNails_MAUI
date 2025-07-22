@@ -81,7 +81,7 @@ namespace BNails_MAUI.ViewModels
 
                 if(usuario == null)
                 {
-                    await _dialogService.MostrarAlertaAsync("Atención!","No se encontró el usuario.");
+                    await _dialogService.MostrarAlertaAsync("Atención!","No se encontró al usuario.");
                     return;
                 }
 
@@ -133,7 +133,7 @@ namespace BNails_MAUI.ViewModels
 
                 if(codigoReenviado)
                 {
-                    await _dialogService.MostrarAlertaAsync("Código reenviado con éxito!","Revisá tu correo electrónico.");
+                    await _dialogService.MostrarAlertaAsync("Código reenviado con éxito!","Revisa tu correo electrónico.");
                     codigoVencido = false;
                     intentosIngresoCod = 3;
                     OnPropertyChanged(nameof(UnenabledReenviarCodigoLbl));

@@ -13,7 +13,12 @@
 
         <ScrollView HorizontalOptions="Center">
 
-            <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
+            <VerticalStackLayout
+                Spacing="25"                                 
+                VerticalOptions="Center"                                 
+                HorizontalOptions="Center"                                 
+                Padding="30, 0"                                 
+                WidthRequest="350">
 
                 <Label
                     Text="Ingresar código"

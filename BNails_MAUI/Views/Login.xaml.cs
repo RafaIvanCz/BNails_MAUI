@@ -40,8 +40,8 @@ public partial class Login : ContentPage
         await Shell.Current.GoToAsync(nameof(RecuperarPwd));
     }
 
-    private async void ValidarCodigo_Tapped(object sender,TappedEventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(ValidarCodigo));
-    }
+    //private async void ValidarCodigo_Tapped(object sender,TappedEventArgs e)
+    //{
+    //    await Shell.Current.GoToAsync(nameof(ResetPwd));
+    //}
 }
