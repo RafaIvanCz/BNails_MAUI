@@ -16,9 +16,14 @@
             Opacity="0.2"
             IsVisible="True" />
 
-        <ScrollView HorizontalOptions="Center">
+            <ScrollView HorizontalOptions="Center">
 
-            <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
+                <VerticalStackLayout
+                    Spacing="25"                                 
+                    VerticalOptions="Center"                                 
+                    HorizontalOptions="Center"                                 
+                    Padding="30, 0"                                 
+                    WidthRequest="350">
 
                 <Label
                     Text="Iniciar sesión"
@@ -38,7 +43,10 @@
                     PlaceholderColor="{StaticResource Gray900}"
                     Text="{ Binding Password }"/>
 
-                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <StackLayout
+                    Orientation="Horizontal"
+                    VerticalOptions="Center">
+                    
                     <Label
                         Text="Olvidé mi contraseña"
                         TextColor="{ StaticResource DarkRedColor }"
@@ -49,9 +57,14 @@
                             <TapGestureRecognizer Tapped="RecuperarPwd_Tapped"/>
                         </Label.GestureRecognizers>
                     </Label>
+                    
                 </StackLayout>
 
-                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
+                <StackLayout
+                    Orientation="Horizontal"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End">
+                    
                     <Label
                         Text="Mostrar contraseña"
                         TextColor="DarkBlue"
@@ -74,7 +87,10 @@
                     Style="{ StaticResource BotonesInicio }"
                     Command="{ Binding LoginCommand }"/>
 
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="Start">
+                    
                     <Label
                         Text="No tenés cuenta?"
                         TextColor="DarkBlue"
@@ -95,15 +111,16 @@
 
                 </StackLayout>
 
-                <Label
-                    Text="Validar Código"
+                <!--<Label
+                    Text="Reestablecer contraseña"
                     Style="{ StaticResource LabelInicio }">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="ValidarCodigo_Tapped"/>
                     </Label.GestureRecognizers>
-                </Label>
+                </Label>-->
 
             </VerticalStackLayout>
+                
         </ScrollView>
 
         <popup:LoadingPopup x:Name="loadingPopup" />

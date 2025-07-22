@@ -12,15 +12,26 @@
 
         <ScrollView HorizontalOptions="Center">
 
-            <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center">
+            <VerticalStackLayout
+                Spacing="25"                                 
+                VerticalOptions="Center"                                 
+                HorizontalOptions="Center"                                 
+                Padding="30, 0">
 
                 <Label 
                     Text="Recuperar contraseña"
-                    Margin="0,0,0,55"
+                    Margin="0,0,0,25"
                     Style="{ StaticResource LabelHeaderInicio }" />
 
+                <Label 
+                    Text="Ingresá tu correo electrónico, presiona 'Continuar' y se te enviará un código de 4 dígitos para que puedas cambiar la contraseña."
+                    FontSize="Small"
+                    HorizontalTextAlignment="Center"
+                    Padding="18,0"
+                    Margin="0,0,0,40"/>
+
                 <Entry 
-                    Placeholder="Ingresá tu correo electrónico"
+                    Placeholder="Ingresa tu correo"
                     PlaceholderColor="{ StaticResource Gray900 }"
                     Keyboard="Email"
                     Margin="0,10,0,0"
@@ -29,12 +40,12 @@
                 <Label
                     Text="Formato correcto: 'ejemplo@mail.com'"
                     TextColor="Red"
-                    Margin="0,0,0,0"
+                    Margin="0,-20,0,0"
                     IsVisible="{Binding MostrarFormatoEmail}" />
 
                 <Button 
                     Text="Continuar"
-                    Margin="0,30,0,50"
+                    Margin="0,40,0,50"
                     BackgroundColor="DarkBlue"
                     Style="{ StaticResource BotonesInicio }"
                     Command="{ Binding RecuperarPwdCommand }"/>
