@@ -2,6 +2,7 @@
 using BNails_MAUI.Interfaces.Repositories;
 using BNails_MAUI.Interfaces.Services;
 using BNails_MAUI.Services;
+using BNails_MAUI.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -105,12 +106,12 @@ namespace BNails_MAUI.ViewModels
 
                 if(!SeguridadHelper.VerificarPassword(Password,passwordGuardada))
                 {
-                    await _dialogService.MostrarAlertaAsync("Atención!","Contraseña incorrecta!");
+                    await _dialogService.MostrarAlertaAsync("Atención!","La contraseña es incorrecta!");
+                    IsCargando = false;
                     return;
-                } else
-                {
-                    await _dialogService.MostrarAlertaAsync("Felicidades!","Ingresaste!");
                 }
+
+                await Shell.Current.GoToAsync(nameof(HomePage));
 
             } finally
             {
