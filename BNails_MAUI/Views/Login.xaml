@@ -10,11 +10,11 @@
 
     <Grid>
 
-        <Image
+        <!--<Image
             Source="background2.jpeg"
             Aspect="AspectFill"
             Opacity="0.2"
-            IsVisible="True" />
+            IsVisible="True" />-->
 
             <ScrollView HorizontalOptions="Center">
 
@@ -111,13 +111,13 @@
 
                 </StackLayout>
 
-                <!--<Label
-                    Text="Reestablecer contraseña"
+                <Label
+                    Text="Home Page"
                     Style="{ StaticResource LabelInicio }">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ValidarCodigo_Tapped"/>
+                        <TapGestureRecognizer Tapped="HomePage_Tapped"/>
                     </Label.GestureRecognizers>
-                </Label>-->
+                </Label>
 
             </VerticalStackLayout>
                 

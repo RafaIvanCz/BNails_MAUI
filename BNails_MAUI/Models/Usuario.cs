@@ -14,5 +14,6 @@ namespace BNails_MAUI.Models
         public string? Password { get; set; }
         public string? CodigoRecuperacion { get; set; }
         public DateTime? CodigoRecuExpiro { get; set; }
+        public DateTime? FechaPrimerIngreso { get; set; }
     }
 }

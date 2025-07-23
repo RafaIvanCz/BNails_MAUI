@@ -56,7 +56,8 @@ namespace BNails_MAUI.Repositories
             if(reader.Read())
             {
                 int idxCodigo = reader.GetOrdinal("codigo_recuperacion");
-                int idxFecha = reader.GetOrdinal("codigo_fecha_exp");
+                int idxFechaCodigo = reader.GetOrdinal("codigo_fecha_exp");
+                int idxFechaPrimerIngreso = reader.GetOrdinal("fecha_primer_ingreso");
 
                 return new Usuario
                 {
@@ -65,7 +66,8 @@ namespace BNails_MAUI.Repositories
                     Email = reader.GetString("email"),
                     Password = reader.GetString("password"),
                     CodigoRecuperacion = reader.IsDBNull(idxCodigo) ? null : reader.GetString(idxCodigo),
-                    CodigoRecuExpiro = reader.IsDBNull(idxFecha) ? null : reader.GetDateTime(idxFecha).ToLocalTime()
+                    CodigoRecuExpiro = reader.IsDBNull(idxFechaCodigo) ? null : reader.GetDateTime(idxFechaCodigo).ToLocalTime(),
+                    FechaPrimerIngreso = reader.IsDBNull(idxFechaPrimerIngreso) ? null : reader.GetDateTime(idxFechaPrimerIngreso).ToLocalTime()
                 };
             }
 
@@ -99,6 +101,21 @@ namespace BNails_MAUI.Repositories
             using var command = new MySqlCommand(query,connection);
             command.Parameters.AddWithValue("@Codigo",codigo);
             command.Parameters.AddWithValue("@Expira",fechaExpiracion);
+            command.Parameters.AddWithValue("@Email",email);
+
+            int rows = command.ExecuteNonQuery();
+            return rows > 0;
+        }
+
+        public bool GuardarFechaPrimerIngreso(string email, DateTime fechaPrimerIngreso)
+        {
+            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            connection.Open();
+
+            string query = @"UPDATE usuarios SET fecha_primer_ingreso = @FechaPrimerIngreso WHERE email = @Email";
+
+            using var command = new MySqlCommand(query,connection);
+            command.Parameters.AddWithValue("@FechaPrimerIngreso",fechaPrimerIngreso);
             command.Parameters.AddWithValue("@Email",email);
 
             int rows = command.ExecuteNonQuery();
