@@ -111,7 +111,7 @@ namespace BNails_MAUI.ViewModels
                     return;
                 }
 
-                await Shell.Current.GoToAsync(nameof(HomePage));
+                await Shell.Current.GoToAsync($"HomePage?email={Email}");
 
             } finally
             {

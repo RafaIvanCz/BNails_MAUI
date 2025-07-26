@@ -5,24 +5,80 @@
              Shell.NavBarIsVisible="False"
              Title="HomePage">
 
-    <Grid BackgroundColor="{ StaticResource MainBackground }">
+    <Grid BackgroundColor="{ StaticResource MainBackground }" RowDefinitions="*,Auto">
 
         <ScrollView HorizontalOptions="Center">
-            
+
             <VerticalStackLayout
                 Spacing="25"                                 
                 VerticalOptions="Center"                                 
                 HorizontalOptions="Center"                                 
                 Padding="30, 0">
-                
+
                 <Label 
                     Text="Elegí el tipo de trabajo que quisieras realizarte."
-                    VerticalOptions="Start" 
-                    HorizontalOptions="Center" />
-                
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    TextColor="{ StaticResource ColorMainFont }"
+                    Margin="0,0,0,50"
+                    HorizontalTextAlignment="Center" />
+
+                <VerticalStackLayout>
+                    <Button
+                        Text="Francesitas"
+                        TextColor="#590d22"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        Margin="0,15"
+                        BackgroundColor="#ffea00"/>
+
+                    <Button
+                        Text="Gel"
+                        TextColor="#590d22"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        Margin="0,15"
+                        BackgroundColor="#ffea00"/>
+
+                    <Button
+                        Text="Acrílica"
+                        TextColor="#590d22"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        Margin="0,15"
+                        BackgroundColor="#ffea00"/>
+
+                    <Button
+                        Text="Porcelana"
+                        TextColor="#590d22"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        Margin="0,15"
+                        BackgroundColor="#ffea00"/>
+                </VerticalStackLayout>
+
             </VerticalStackLayout>
-            
+
         </ScrollView>
+        
+        <!--Footer-->
+
+        <StackLayout
+            Grid.Row="1"
+            Padding="10"
+            Spacing="5">
+
+            <BoxView
+                HeightRequest="1"
+                Background="{StaticResource ColorMainFont}"
+                HorizontalOptions="Fill"/>
+
+            <Label
+                Text="BNails ® | Todos los derechos reservados"
+                HorizontalOptions="Center"
+                TextColor="{StaticResource ColorMainFont}"/>
+
+        </StackLayout>
         
     </Grid>
     

@@ -13,5 +13,6 @@ namespace BNails_MAUI.Interfaces.Repositories
         bool ExisteUsuarioPorEmail(string email);
         Usuario? ObtenerUsuarioPorEmail(string email);
         bool GuardarCodigoVerificacion(string email,string codigo,DateTime fechaExpiracion);
+        bool GuardarFechaPrimerIngreso(string email, DateTime fechaPrimerIngreso);
     }
 }
