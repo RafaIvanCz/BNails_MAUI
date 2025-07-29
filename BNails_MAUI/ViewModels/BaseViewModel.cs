@@ -12,6 +12,7 @@ namespace BNails_MAUI.ViewModels
     {
         private bool _isBusy;
         private string? _title;
+        public bool IsNotBusy => !IsBusy;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -19,7 +20,11 @@ namespace BNails_MAUI.ViewModels
         public bool IsBusy
         {
             get => _isBusy;
-            set => SetProperty(ref _isBusy,value);
+            set
+            {
+                if(SetProperty(ref _isBusy,value))
+                    OnPropertyChanged(nameof(IsNotBusy));
+            }
         }
 
         // Título opcional de la página
@@ -30,12 +35,17 @@ namespace BNails_MAUI.ViewModels
         }
 
         // Método genérico para notificar cambios en propiedades
-        protected bool SetProperty<T>(ref T backingStore,T value,[CallerMemberName] string propertyName = "")
+        protected bool SetProperty<T>(
+            ref T backingStore,
+            T value,
+            Action onChanged = null,
+            [CallerMemberName] string propertyName = "")
         {
             if(EqualityComparer<T>.Default.Equals(backingStore,value))
                 return false;
 
             backingStore = value;
+            onChanged?.Invoke();
             OnPropertyChanged(propertyName);
             return true;
         }

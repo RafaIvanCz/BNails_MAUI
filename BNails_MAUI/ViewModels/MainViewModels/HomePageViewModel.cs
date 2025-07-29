@@ -21,15 +21,11 @@ namespace BNails_MAUI.ViewModels.MainViewModels
         public string Email
         {
             get => email;
-            set
+            set => SetProperty(ref email,value,async () =>
             {
-                if(email != value)
-                {
-                    email = value;
-                    OnPropertyChanged();
-                    _ = VerificiarPrimerIngreso();
-                }
-            }
+                if(!string.IsNullOrWhiteSpace(email))
+                    await VerificiarPrimerIngreso();
+            });
         }
 
         public HomePageViewModel(IDialogService dialogService, UsuarioService usuarioService)
@@ -38,23 +34,31 @@ namespace BNails_MAUI.ViewModels.MainViewModels
             _usuarioService = usuarioService;
         }
 
-        public async Task VerificiarPrimerIngreso()
+        private async Task VerificiarPrimerIngreso()
         {
-            var usuario = _usuarioService.GetUsuarioPorEmail(Email);
-            if(usuario == null)
-                return;
+            IsBusy = true;
 
-            if(usuario.FechaPrimerIngreso == null)
+            try
             {
+                var usuario = _usuarioService.GetUsuarioPorEmail(Email);
+                if(usuario == null || usuario.FechaPrimerIngreso != null)
+                    return;
+
                 DateTime fechaIngreso = DateTime.Now;
                 usuario.FechaPrimerIngreso = fechaIngreso;
 
-                bool fechaGuardada = _usuarioService.GuardarFechaPrimerIngreso(Email, fechaIngreso);
+                bool fechaGuardada = _usuarioService.GuardarFechaPrimerIngreso(Email!,fechaIngreso);
 
                 if(fechaGuardada)
                 {
-                    await _dialogService.MostrarAlertaAsync($"¡Bienvenido/a {usuario.Nombre} a BNails!","Esperamos que tengas una excelente experiencia en la app.");
+                    await _dialogService.MostrarAlertaAsync(
+                        $"¡Bienvenido/a {usuario.Nombre} a BNails!",
+                        "Esperamos que tengas una excelente experiencia en la app."
+                    );
                 }
+            } finally
+            {
+                IsBusy = false;
             }
         }
     }
