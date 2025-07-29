@@ -41,5 +41,10 @@ namespace BNails_MAUI.Services
         {
             return _usuarioRepository.GuardarCodigoVerificacion(email,codigo,fechaExpiracion);
         }
+
+        public bool GuardarFechaPrimerIngreso(string email, DateTime fechaPrimerIngreso)
+        {
+            return _usuarioRepository.GuardarFechaPrimerIngreso(email, fechaPrimerIngreso);
+        }
     }
 }
