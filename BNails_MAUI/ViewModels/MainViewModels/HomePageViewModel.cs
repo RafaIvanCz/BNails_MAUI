@@ -41,13 +41,20 @@ namespace BNails_MAUI.ViewModels.MainViewModels
             try
             {
                 var usuario = _usuarioService.GetUsuarioPorEmail(Email);
-                if(usuario == null || usuario.FechaPrimerIngreso != null)
+
+                if(usuario == null)
+                {
+                    await _dialogService.MostrarAlertaAsync("Usuario no encontrado", "Hubo un error y no se encontró el usuario. Volvé a iniciar sesión.");
+                    await Shell.Current.GoToAsync("//Login");
+                }
+
+                if(usuario.FechaPrimerIngreso != null)
                     return;
 
                 DateTime fechaIngreso = DateTime.Now;
                 usuario.FechaPrimerIngreso = fechaIngreso;
 
-                bool fechaGuardada = _usuarioService.GuardarFechaPrimerIngreso(Email!,fechaIngreso);
+                bool fechaGuardada = _usuarioService.GuardarFechaPrimerIngreso(Email,fechaIngreso);
 
                 if(fechaGuardada)
                 {
@@ -56,6 +63,7 @@ namespace BNails_MAUI.ViewModels.MainViewModels
                         "Esperamos que tengas una excelente experiencia en la app."
                     );
                 }
+
             } finally
             {
                 IsBusy = false;
