@@ -14,7 +14,7 @@ namespace BNails_MAUI.Repositories
     {
         public Configuracion? GetConfiguracion()
         {
-            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            using var connection = ConexionBD.GetConexionBD();
             connection.Open();
 
             string query = "SELECT * FROM configuraciones LIMIT 1"; // Asumimos una sola fila
@@ -41,7 +41,7 @@ namespace BNails_MAUI.Repositories
 
         public bool GuardarConfiguracion(Configuracion config)
         {
-            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            using var connection = ConexionBD.GetConexionBD();
             connection.Open();
 
             string query = @"INSERT INTO configuraciones 
