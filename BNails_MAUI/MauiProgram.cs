@@ -2,6 +2,7 @@
 using BNails_MAUI.Interfaces.Services;
 using BNails_MAUI.Repositories;
 using BNails_MAUI.Services;
+using FFImageLoading.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace BNails_MAUI
@@ -13,6 +14,7 @@ namespace BNails_MAUI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseFFImageLoading()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

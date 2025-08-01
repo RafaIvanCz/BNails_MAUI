@@ -11,6 +11,17 @@ namespace BNails_MAUI.Data
     {
         private const string conexionBD = "server=10.0.2.2;port=3306;database=bnails;user=root;password=root";
 
-        public static string ObtenerConexionBD() => conexionBD;
+        public static MySqlConnection GetConexionBD()
+        {
+            try
+            {
+                return new MySqlConnection(conexionBD);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al conectar a la base de datos: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

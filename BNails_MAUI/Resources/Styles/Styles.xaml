@@ -474,4 +474,22 @@
         <Setter Property="SemanticProperties.HeadingLevel" Value="Level1" />
     </Style>
 
+    <Style TargetType="Entry" x:Key="EntryConBorde">
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="HeightRequest" Value="50"/>
+        <Setter Property="Margin" Value="0,5"/>
+        <Setter Property="HorizontalOptions" Value="Fill"/>
+    </Style>
+
+    <Style TargetType="Border" x:Key="BorderDeEntry">
+        <Setter Property="Stroke" Value="DarkBlue"/>
+        <Setter Property="StrokeThickness" Value="2"/>
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="4"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

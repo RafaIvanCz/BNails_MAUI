@@ -15,7 +15,7 @@ namespace BNails_MAUI.Repositories
     {
         public bool GuardarUsuario(Usuario usuario)
         {
-            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            using var connection = ConexionBD.GetConexionBD();
             connection.Open();
 
             string query = "INSERT INTO usuarios (nombre, email, password) VALUES (@Nombre, @Email, @Password)";
@@ -30,7 +30,7 @@ namespace BNails_MAUI.Repositories
 
         public bool ExisteUsuarioPorEmail(string email)
         {
-            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            using var connection = ConexionBD.GetConexionBD();
             connection.Open();
 
             string query = "SELECT COUNT(*) FROM usuarios WHERE email = @Email";
@@ -44,7 +44,7 @@ namespace BNails_MAUI.Repositories
 
         public Usuario? ObtenerUsuarioPorEmail(string email)
         {
-            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            using var connection = ConexionBD.GetConexionBD();
             connection.Open();
 
             string query = "SELECT * FROM usuarios WHERE email = @Email";
@@ -76,7 +76,7 @@ namespace BNails_MAUI.Repositories
 
         public bool ActualizarPwd(Usuario usuario)
         {
-            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            using var connection = ConexionBD.GetConexionBD();
             connection.Open();
 
             string query = "UPDATE usuarios SET password = @Password WHERE email = @Email";
@@ -90,7 +90,7 @@ namespace BNails_MAUI.Repositories
 
         public bool GuardarCodigoVerificacion(string email,string codigo,DateTime fechaExpiracion)
         {
-            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            using var connection = ConexionBD.GetConexionBD();
             connection.Open();
 
             string query = @"UPDATE usuarios 
@@ -109,7 +109,7 @@ namespace BNails_MAUI.Repositories
 
         public bool GuardarFechaPrimerIngreso(string email, DateTime fechaPrimerIngreso)
         {
-            using var connection = new MySqlConnection(ConexionBD.ObtenerConexionBD());
+            using var connection = ConexionBD.GetConexionBD();
             connection.Open();
 
             string query = @"UPDATE usuarios SET fecha_primer_ingreso = @FechaPrimerIngreso WHERE email = @Email";

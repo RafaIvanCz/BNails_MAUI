@@ -8,18 +8,18 @@
              Shell.NavBarIsVisible="False"
              Title="Login">
 
-    <Grid>
+    <Grid BackgroundColor="White">
 
-        <!--<Image
+        <Image
             Source="background2.jpeg"
             Aspect="AspectFill"
             Opacity="0.2"
-            IsVisible="True" />-->
+            IsVisible="True" />
 
             <ScrollView HorizontalOptions="Center">
 
                 <VerticalStackLayout
-                    Spacing="25"                                 
+                    Spacing="35"                                 
                     VerticalOptions="Center"                                 
                     HorizontalOptions="Center"                                 
                     Padding="30, 0"                                 
@@ -73,11 +73,12 @@
                         FontSize="16"
                         FontAttributes="Bold"
                         VerticalOptions="Center"/>
-
-                    <CheckBox
-                        x:Name="ShowPasswordCheckBox"
-                        CheckedChanged="OnShowPasswordCheckBox"
-                        VerticalOptions="Center"/>
+                    
+                        <CheckBox
+                            x:Name="ShowPasswordCheckBox"
+                            Color="Black"
+                            CheckedChanged="OnShowPasswordCheckBox"
+                            VerticalOptions="Center"/>
 
                 </StackLayout>
 
