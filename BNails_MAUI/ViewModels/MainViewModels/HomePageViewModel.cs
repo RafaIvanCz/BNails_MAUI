@@ -1,7 +1,11 @@
-﻿using BNails_MAUI.Interfaces.Services;
+﻿using BNails_MAUI.Interfaces.Repositories;
+using BNails_MAUI.Interfaces.Services;
+using BNails_MAUI.Models;
 using BNails_MAUI.Services;
+using FFImageLoading.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,64 +14,25 @@ using System.Threading.Tasks;
 
 namespace BNails_MAUI.ViewModels.MainViewModels
 {
-    [QueryProperty(nameof(Email), "email")]
-
     public class HomePageViewModel : BaseViewModel
     {
-        private readonly IDialogService _dialogService;
-        private readonly UsuarioService _usuarioService;
+        private readonly ITipoTrabajoRepository _tipoTrabajoRepository;
 
-        private string? email;
-        public string Email
+        public ObservableCollection<TipoTrabajo> TiposTrabajo { get; } = new();
+
+        public HomePageViewModel(ITipoTrabajoRepository tipoTrabajoRepository)
         {
-            get => email;
-            set => SetProperty(ref email,value,async () =>
-            {
-                if(!string.IsNullOrWhiteSpace(email))
-                    await VerificiarPrimerIngreso();
-            });
+            _tipoTrabajoRepository = tipoTrabajoRepository;
+            CargarTiposTrabajo();
         }
 
-        public HomePageViewModel(IDialogService dialogService, UsuarioService usuarioService)
+        private void CargarTiposTrabajo()
         {
-            _dialogService = dialogService;
-            _usuarioService = usuarioService;
-        }
+            var lista = _tipoTrabajoRepository.ObtenerTodos();
 
-        private async Task VerificiarPrimerIngreso()
-        {
-            IsBusy = true;
-
-            try
-            {
-                var usuario = _usuarioService.GetUsuarioPorEmail(Email);
-
-                if(usuario == null)
-                {
-                    await _dialogService.MostrarAlertaAsync("Usuario no encontrado", "Hubo un error y no se encontró el usuario. Volvé a iniciar sesión.");
-                    await Shell.Current.GoToAsync("//Login");
-                }
-
-                if(usuario.FechaPrimerIngreso != null)
-                    return;
-
-                DateTime fechaIngreso = DateTime.Now;
-                usuario.FechaPrimerIngreso = fechaIngreso;
-
-                bool fechaGuardada = _usuarioService.GuardarFechaPrimerIngreso(Email,fechaIngreso);
-
-                if(fechaGuardada)
-                {
-                    await _dialogService.MostrarAlertaAsync(
-                        $"¡Bienvenido/a {usuario.Nombre} a BNails!",
-                        "Esperamos que tengas una excelente experiencia en la app."
-                    );
-                }
-
-            } finally
-            {
-                IsBusy = false;
-            }
+            TiposTrabajo.Clear();
+            foreach(var tipo in lista)
+                TiposTrabajo.Add(tipo);
         }
     }
 }

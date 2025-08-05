@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BNails_MAUI.Views.Main.TipoTrabajoPage">
+
+    <Grid>
+        <!-- Lista de fotos -->
+        <CollectionView ItemsSource="{Binding Fotos}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout Padding="10">
+                        <Image Source="{Binding RutaImagen}" HeightRequest="200"/>
+                        <Label Text="{Binding Descripcion}" FontSize="14" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botón fijo solo visible para Admin -->
+        <Button Text="Subir Foto"
+                BackgroundColor="Purple"
+                TextColor="White"
+                VerticalOptions="End"
+                HorizontalOptions="Fill"
+                Command="{Binding SubirFotoCommand}"
+                IsVisible="{Binding IsAdmin}"/>
+    </Grid>
+</ContentPage>

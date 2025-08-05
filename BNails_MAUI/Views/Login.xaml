@@ -32,6 +32,7 @@
 
                 <Entry
                     Placeholder="Ingresa tu correo electrónico"
+                    TextColor="Black"
                     Keyboard="Email"
                     PlaceholderColor="{StaticResource Gray900}"
                     Text="{ Binding Email }" />
@@ -39,6 +40,7 @@
                 <Entry
                     x:Name="txtPasswordLogin"
                     Placeholder="Ingresa tu contraseña"
+                    TextColor="Black"
                     IsPassword="True"
                     PlaceholderColor="{StaticResource Gray900}"
                     Text="{ Binding Password }"/>
