@@ -24,7 +24,7 @@ namespace BNails_MAUI.Services
 
         public void AgregarFoto(FotoTrabajo foto)
         {
-            _fotosTrabajosRepo.AgregarFoto(foto);
+            _fotosTrabajosRepo.AgregarFotoTrabajo(foto);
         }
     }
 }

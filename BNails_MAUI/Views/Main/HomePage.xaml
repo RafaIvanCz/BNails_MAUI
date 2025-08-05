@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BNails_MAUI.Views.HomePage"
+             x:Class="BNails_MAUI.Views.Main.HomePage"
              Shell.NavBarIsVisible="False"
              Title="HomePage">
 
-    <Grid BackgroundColor="{ StaticResource MainBackground }" RowDefinitions="*,Auto">
+    <Grid BackgroundColor="{StaticResource MainBackground}" RowDefinitions="*,Auto">
 
         <ScrollView HorizontalOptions="Center">
 
@@ -23,71 +23,39 @@
                     Margin="0,0,0,50"
                     HorizontalTextAlignment="Center" />
 
-                <VerticalStackLayout>
-                    <Button
-                        Text="Francesitas"
-                        TextColor="#590d22"
-                        FontAttributes="Bold"
-                        FontSize="Large"
-                        Margin="0,15"
-                        BackgroundColor="#ffea00"/>
-
-                    <Button
-                        Text="Soft Gel"
-                        TextColor="#590d22"
-                        FontAttributes="Bold"
-                        FontSize="Large"
-                        Margin="0,15"
-                        BackgroundColor="#ffea00"/>
-
-                    <Button
-                        Text="Acrílica"
-                        TextColor="#590d22"
-                        FontAttributes="Bold"
-                        FontSize="Large"
-                        Margin="0,15"
-                        BackgroundColor="#ffea00"/>
-
-                    <Button
-                        Text="Kapping"
-                        TextColor="#590d22"
-                        FontAttributes="Bold"
-                        FontSize="Large"
-                        Margin="0,15"
-                        BackgroundColor="#ffea00"/>
-
-                    <Button
-                        Text="Semi-permanentes"
-                        TextColor="#590d22"
-                        FontAttributes="Bold"
-                        FontSize="Large"
-                        Margin="0,15"
-                        BackgroundColor="#ffea00"/>
-                </VerticalStackLayout>
-
+                <!-- Lista de tipos de trabajos -->
+                <CollectionView
+                    ItemsSource="{Binding TiposTrabajo}"
+                    SelectionMode="Single"
+                    SelectionChanged="OnTipoTrabajoSeleccionado"
+                    Margin="20">
+                    
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Button Text="{Binding Nombre}"
+                            TextColor="#004e98"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            Margin="0,10"
+                            BorderColor="#004e98"
+                            BorderWidth="2"
+                            BackgroundColor="#ff9100"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    
+                </CollectionView>
+                
             </VerticalStackLayout>
-
+            
         </ScrollView>
-        
-        <!--Footer-->
 
-        <StackLayout
-            Grid.Row="1"
-            Padding="10"
-            Spacing="5">
-
-            <BoxView
-                HeightRequest="1"
-                Background="{StaticResource ColorMainFont}"
-                HorizontalOptions="Fill"/>
-
-            <Label
-                Text="BNails ® | Todos los derechos reservados"
-                HorizontalOptions="Center"
-                TextColor="{StaticResource ColorMainFont}"/>
-
+                <!--Footer-->
+        <StackLayout Grid.Row="1" Padding="10" Spacing="5">
+            <BoxView HeightRequest="1" Background="{StaticResource ColorMainFont}" HorizontalOptions="Fill"/>
+            <Label Text="BNails ® | Todos los derechos reservados"
+                   HorizontalOptions="Center"
+                   TextColor="{StaticResource ColorMainFont}"/>
         </StackLayout>
-        
+
     </Grid>
-    
 </ContentPage>

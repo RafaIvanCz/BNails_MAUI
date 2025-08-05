@@ -71,6 +71,9 @@
 	  <Compile Update="Views\Login.xaml.cs">
 	    <DependentUpon>Login.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Main\TipoTrabajoPage.xaml.cs">
+	    <DependentUpon>TipoTrabajoPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\RecuperarPwd.xaml.cs">
 	    <DependentUpon>RecuperarPwd.xaml</DependentUpon>
 	  </Compile>
@@ -86,7 +89,7 @@
 	  <MauiXaml Update="Views\Login.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Main\ListaTipoTrabajos.xaml">
+	  <MauiXaml Update="Views\Main\TipoTrabajoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\LoadingPopup.xaml">

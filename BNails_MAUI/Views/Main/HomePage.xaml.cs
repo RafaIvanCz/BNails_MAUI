@@ -1,24 +1,25 @@
 using BNails_MAUI.Interfaces.Services;
+using BNails_MAUI.Models;
 using BNails_MAUI.Services;
 using BNails_MAUI.ViewModels.MainViewModels;
+using BNails_MAUI.Views.Main;
 
-namespace BNails_MAUI.Views;
-
-public partial class HomePage : ContentPage
+namespace BNails_MAUI.Views.Main
 {
-	public HomePage()
-	{
-		InitializeComponent();
-        var services = ((App) App.Current!).Services;
-
-        var dialogService = services?.GetService<IDialogService>();
-        var usuarioService = services?.GetService<UsuarioService>();
-
-        if(dialogService == null || usuarioService == null)
+    public partial class HomePage : ContentPage
+    {
+        public HomePage(HomePageViewModel viewModel)
         {
-            throw new Exception("No se pudieron obtener los servicios necesarios.");
+            InitializeComponent();
+            BindingContext = viewModel;
         }
 
-        BindingContext = new HomePageViewModel(dialogService,usuarioService);
+        private async void OnTipoTrabajoSeleccionado(object sender,SelectionChangedEventArgs e)
+        {
+            if(e.CurrentSelection.FirstOrDefault() is TipoTrabajo tipo)
+            {
+                await Navigation.PushAsync(new TipoTrabajoPage(tipo.Id));
+            }
+        }
     }
 }
