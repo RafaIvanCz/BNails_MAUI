@@ -117,7 +117,7 @@ namespace BNails_MAUI.ViewModels
                 }
 
                 string codigoVerificacion = _emailService.GenerarCodigoVerificacion();
-                string? nombreUsuario = _usuarioService.GetUsuarioPorEmail(Email).Nombre;
+                string? nombreUsuario = _usuarioService.GetUsuarioPorEmail(Email)?.Nombre;
 
                 bool emailEnviado = await _emailService.EnviarEmailCodigoVerificacion(Email,codigoVerificacion,nombreUsuario);
 

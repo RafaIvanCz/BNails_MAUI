@@ -2,6 +2,7 @@
 using BNails_MAUI.Interfaces.Services;
 using BNails_MAUI.Repositories;
 using BNails_MAUI.Services;
+using BNails_MAUI.ViewModels;
 using BNails_MAUI.Views;
 using FFImageLoading.Maui;
 using Microsoft.Extensions.Logging;
@@ -30,8 +31,9 @@ namespace BNails_MAUI
             builder.Services.AddSingleton<IFotosTrabajosRepository,FotosTrabajosRepository>();
             builder.Services.AddSingleton<ITipoTrabajoRepository,TipoTrabajoRepository>();
             builder.Services.AddTransient<ViewModels.MainViewModels.HomePageViewModel>();
+            builder.Services.AddTransient<TipoTrabajosViewModel>();
             builder.Services.AddTransient<Views.Main.HomePage>();
-
+            builder.Services.AddTransient<Views.Main.TipoTrabajoPage>();
 
             builder.Services.AddSingleton<App>();
 

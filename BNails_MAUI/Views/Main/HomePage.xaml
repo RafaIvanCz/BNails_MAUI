@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:BNails_MAUI.ViewModels.MainViewModels"
+             xmlns:models="clr-namespace:BNails_MAUI.Models"
              x:Class="BNails_MAUI.Views.Main.HomePage"
+             x:DataType="viewmodels:HomePageViewModel"
              Shell.NavBarIsVisible="False"
              Title="HomePage">
 
@@ -25,23 +28,25 @@
 
                 <!-- Lista de tipos de trabajos -->
                 <CollectionView
+                    x:Name="ListaTipos"
                     ItemsSource="{Binding TiposTrabajo}"
-                    SelectionMode="Single"
-                    SelectionChanged="OnTipoTrabajoSeleccionado"
+                    SelectionMode="None"
                     Margin="20">
                     
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:TipoTrabajo">
                             <Button Text="{Binding Nombre}"
-                            TextColor="#004e98"
-                            FontAttributes="Bold"
-                            FontSize="Large"
-                            Margin="0,10"
-                            BorderColor="#004e98"
-                            BorderWidth="2"
-                            BackgroundColor="#ff9100"/>
+                                    TextColor="#a53860"
+                                    FontAttributes="Bold"
+                                    FontSize="Large"
+                                    Margin="0,10"
+                                    BorderColor="#fb6f92"
+                                    BorderWidth="2"
+                                    BackgroundColor="#ff8fab"
+                                    Command="{Binding Source={x:Reference ListaTipos}, Path=BindingContext.TipoTrabajoCommand}"
+                                    CommandParameter="{Binding .}" />
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
+                    </CollectionView.ItemTemplate>      
                     
                 </CollectionView>
                 

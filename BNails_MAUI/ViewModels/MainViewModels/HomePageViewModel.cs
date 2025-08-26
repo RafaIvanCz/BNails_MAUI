@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BNails_MAUI.ViewModels.MainViewModels
 {
@@ -18,12 +19,24 @@ namespace BNails_MAUI.ViewModels.MainViewModels
     {
         private readonly ITipoTrabajoRepository _tipoTrabajoRepository;
 
-        public ObservableCollection<TipoTrabajo> TiposTrabajo { get; } = new();
+        public ObservableCollection<TipoTrabajo> TiposTrabajo { get; } = [];
+
+        public ICommand TipoTrabajoCommand { get; }
 
         public HomePageViewModel(ITipoTrabajoRepository tipoTrabajoRepository)
         {
             _tipoTrabajoRepository = tipoTrabajoRepository;
             CargarTiposTrabajo();
+
+            TipoTrabajoCommand = new Command<TipoTrabajo>(OnTipoTrabajo);
+        }
+
+        public async void OnTipoTrabajo(TipoTrabajo tipoTrabajo)
+        {
+            if (tipoTrabajo == null) return;
+
+            var nombre = Uri.EscapeDataString(tipoTrabajo.Nombre ?? String.Empty);
+            await Shell.Current.GoToAsync($"{nameof(Views.Main.TipoTrabajoPage)}?id={tipoTrabajo.Id}&nombre={nombre}");
         }
 
         private void CargarTiposTrabajo()
