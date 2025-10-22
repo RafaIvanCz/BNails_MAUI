@@ -109,4 +109,9 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiImage Include="Resources\Icons\correo.png" />
+	  <MauiImage Include="Resources\Icons\correo2.png" />
+	</ItemGroup>
+
 </Project>

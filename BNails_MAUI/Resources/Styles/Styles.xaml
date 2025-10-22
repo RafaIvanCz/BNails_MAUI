@@ -13,10 +13,12 @@
         <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>
     </Style>
 
-    <Style TargetType="Border">
-        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
-        <Setter Property="StrokeShape" Value="Rectangle"/>
-        <Setter Property="StrokeThickness" Value="1"/>
+    <Style x:Key="MainBorder" TargetType="Border">
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource DarkRedColor}}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
+        <Setter Property="StrokeThickness" Value="1.8"/>
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="Padding" Value="5"/>
     </Style>
 
     <Style TargetType="BoxView">
@@ -453,7 +455,9 @@
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="White" />
         <Setter Property="FontSize" Value="Subtitle" />
-        <Setter Property="Margin" Value="0, 10, 0, 30" />
+        <Setter Property="BackgroundColor" Value="#3a0ca3" />
+        <Setter Property="Margin" Value="0, 20" />
+        <Setter Property="Padding" Value="0, 15" />
         <Setter Property="HorizontalOptions" Value="Fill" />
     </Style>
 
@@ -466,10 +470,10 @@
     </Style>
 
     <Style x:Key="LabelHeaderInicio" TargetType="Label">
-        <Setter Property="TextColor" Value="DarkBlue" />
+        <Setter Property="TextColor" Value="{ StaticResource LabelInicioTextColor }" />
         <Setter Property="Style" Value="{StaticResource Headline}" />
         <Setter Property="FontAttributes" Value="Bold" />
-        <Setter Property="FontSize" Value="29"/>
+        <Setter Property="FontSize" Value="32"/>
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="SemanticProperties.HeadingLevel" Value="Level1" />
     </Style>
