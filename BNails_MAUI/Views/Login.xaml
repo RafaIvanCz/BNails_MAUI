@@ -12,9 +12,7 @@
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#ffccd5" Offset="0.0" />
-                <!-- Amarillo -->
                 <GradientStop Color="#ffb563" Offset="1.0" />
-                <!-- Naranja -->
             </LinearGradientBrush>
         </Grid.Background>
 
@@ -69,7 +67,7 @@
                     Style="{ StaticResource MainBorder }">
 
                     <Grid ColumnDefinitions="30,*">
-                        <Image Source="padlock2.png"
+                        <Image Source="candado.png"
                                WidthRequest="20"
                                HeightRequest="20"
                                VerticalOptions="Center"/>
@@ -115,7 +113,7 @@
 
                     <CheckBox
                         x:Name="ShowPasswordCheckBox"
-                        Color="Black"
+                        Color="DarkBlue"
                         CheckedChanged="OnShowPasswordCheckBox"
                         VerticalOptions="Center" />
                 </StackLayout>
