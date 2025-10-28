@@ -9,27 +9,51 @@
              Title="ResetPwd">
 
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#f8edeb" Offset="0.0" />
+                <GradientStop Color="#ffe5d9" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
 
         <ScrollView HorizontalOptions="Center">
 
             <VerticalStackLayout
-                Spacing="25"                                 
+                Spacing="20"                                 
                 VerticalOptions="Center"                                 
                 HorizontalOptions="Center"                                 
-                Padding="30, 0">
+                Padding="30,0"
+                WidthRequest="400">
+
+                <Image
+                    Source="logo_principal.png"
+                    WidthRequest="220"
+                    HeightRequest="220"
+                    Margin="0,-70,0,0"
+                    HorizontalOptions="Center"/>
 
                 <Label
                     Text="Reestablecer contraseña"
+                    FontSize="27"
                     Margin="0,0,0,35"
                     Style="{StaticResource LabelHeaderInicio}" />
 
-                <Entry
-                    x:Name="txtPasswordResetPwd"
-                    Placeholder="Ingresa la nueva contraseña"
-                    PlaceholderColor="{StaticResource Gray900}"
-                    IsPassword="True"
-                    Text="{Binding Password}" />
-                
+                <Border
+                    Style="{StaticResource MainBorder}">
+
+                    <Grid ColumnDefinitions="10,*">
+                        <Entry Grid.Column="1"                               
+                            x:Name="txtPasswordResetPwd"
+                            Placeholder="Ingresa la nueva contraseña"
+                            IsPassword="True"
+                            TextColor="Black"
+                            BackgroundColor="Transparent"
+                            Margin="5,0,0,0"
+                            PlaceholderColor="{StaticResource Gray400}"
+                            Text="{Binding Password}" />
+                    </Grid>
+                </Border>
+
                 <StackLayout Margin="0,-20,0,0">
                     <Label
                         Text="❌ Mínimo 8 caracteres"
@@ -48,12 +72,21 @@
 
                 </StackLayout>
 
-                <Entry
-                    x:Name="txtRePasswordResetPwd"
-                    Placeholder="Volvé a ingresar la contraseña"
-                    PlaceholderColor="{StaticResource Gray900}"
-                    IsPassword="True"
-                    Text="{Binding RePassword}" />
+                <Border
+                    Style="{StaticResource MainBorder}">
+
+                    <Grid ColumnDefinitions="10,*">
+                        <Entry Grid.Column="1"
+                            x:Name="txtRePasswordResetPwd"
+                            Placeholder="Volvé a ingresar la contraseña"
+                            IsPassword="True"
+                            TextColor="Black"
+                            BackgroundColor="Transparent"
+                            Margin="5,0,0,0"
+                            PlaceholderColor="{StaticResource Gray400}"
+                            Text="{Binding RePassword}" />
+                    </Grid>
+                </Border>
 
                 <Label
                     Text="Las contraseñas deben ser iguales"
@@ -77,6 +110,7 @@
 
                     <CheckBox
                         x:Name="ShowPasswordCheckBox"
+                        Color="DarkBlue"
                         CheckedChanged="OnShowPasswordCheckBox_ResetPwd"
                         VerticalOptions="Center"/>
 
@@ -84,7 +118,6 @@
 
                 <Button
                     Text="Continuar"
-                    BackgroundColor="DarkBlue"
                     Margin="0,30"
                     Style="{ StaticResource BotonesInicio }"
                     Command="{Binding ResetPwdCommand}" />

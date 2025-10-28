@@ -22,7 +22,7 @@
                 Spacing="20"
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
-                Padding="30, 0"
+                Padding="30,0"
                 WidthRequest="400">
 
                 <Image
