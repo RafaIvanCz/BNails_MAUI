@@ -10,6 +10,12 @@
              Title="ValidarCodigo">
 
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#f8edeb" Offset="0.0" />
+                <GradientStop Color="#ffe5d9" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
 
         <ScrollView HorizontalOptions="Center">
 
@@ -20,22 +26,39 @@
                 Padding="30, 0"                                 
                 WidthRequest="350">
 
+                <Image
+                    Source="logo_principal.png"
+                    WidthRequest="220"
+                    HeightRequest="220"
+                    Margin="0,-60,0,0"
+                    HorizontalOptions="Center"/>
+
                 <Label
                     Text="Ingresar código"
-                    Margin="0,0,0,25"
+                    Margin="0,0,0,50"
                     Style="{ StaticResource LabelHeaderInicio }" />
 
-                <Entry
-                    Placeholder="_ _ _ _"
-                    CharacterSpacing="5"
-                    FontAttributes="Bold"
-                    FontSize="25"
-                    HorizontalTextAlignment="Center"
-                    PlaceholderColor="{StaticResource Gray900}"
-                    Text="{Binding CodigoIngresado}" />
+                <Border
+                    Style="{StaticResource MainBorder}">
+
+                    <Grid ColumnDefinitions="10,*">
+                        <Entry Grid.Column="1"
+                            Placeholder="_ _ _ _"
+                            CharacterSpacing="7"
+                            FontAttributes="Bold"
+                            FontSize="25"
+                            Keyboard="Numeric"
+                            HorizontalTextAlignment="Center"
+                            TextColor="Black"
+                            BackgroundColor="Transparent"
+                            PlaceholderColor="{StaticResource Gray400}"
+                            Text="{Binding CodigoIngresado}" />
+                    </Grid>
+                </Border>
 
                 <Button
                     Text="Continuar"
+                    Margin="0,40,0,30"
                     Style="{StaticResource BotonesInicio}"
                     Command="{Binding ConfirmarCodigoCommand}"
                     IsEnabled="{Binding UnenabledBtn}"
