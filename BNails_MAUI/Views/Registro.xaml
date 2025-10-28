@@ -11,8 +11,8 @@
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#ffccd5" Offset="0.0" />
-                <GradientStop Color="#ffb563" Offset="1.0" />
+                <GradientStop Color="#f8edeb" Offset="0.0" />
+                <GradientStop Color="#ffe5d9" Offset="1.0" />
             </LinearGradientBrush>
         </Grid.Background>
 
@@ -40,16 +40,11 @@
                 <Border
                     Style="{StaticResource MainBorder}">
 
-                    <Grid ColumnDefinitions="30,*">
-                        <Image Source="user1.png"
-                            WidthRequest="20"
-                            HeightRequest="20"
-                            VerticalOptions="Center" />
+                    <Grid ColumnDefinitions="10,*">
                         <Entry Grid.Column="1"
                             Placeholder="Ingresa tu nombre"
                             TextColor="Black"
                             BackgroundColor="Transparent"
-                            Margin="5,0,0,0"
                             PlaceholderColor="{StaticResource Gray400}"
                             Text="{Binding Nombre}" />
                     </Grid>
@@ -58,11 +53,7 @@
                 <Border
                     Style="{StaticResource MainBorder}">
 
-                    <Grid ColumnDefinitions="30,*">
-                        <Image Source="correo.png"
-                            WidthRequest="20"
-                            HeightRequest="20"
-                            VerticalOptions="Center" />
+                    <Grid ColumnDefinitions="10,*">
                         <Entry Grid.Column="1"
                             Placeholder="Ingresa tu correo electrónico"
                             TextColor="Black"
@@ -83,11 +74,7 @@
                 <Border
                     Style="{StaticResource MainBorder}">
 
-                    <Grid ColumnDefinitions="30,*">
-                        <Image Source="candado.png"
-                            WidthRequest="20"
-                            HeightRequest="20"
-                            VerticalOptions="Center" />
+                    <Grid ColumnDefinitions="10,*">
                         <Entry Grid.Column="1"                               
                             x:Name="txtPasswordRegistro"
                             Placeholder="Ingresa la contraseña"
@@ -121,11 +108,7 @@
                 <Border
                     Style="{StaticResource MainBorder}">
 
-                    <Grid ColumnDefinitions="30,*">
-                        <Image Source="candado.png"
-                            WidthRequest="20"
-                            HeightRequest="20"
-                            VerticalOptions="Center" />
+                    <Grid ColumnDefinitions="10,*">
                         <Entry Grid.Column="1"
                             x:Name="txtRePasswordRegistro"
                             Placeholder="Ingresa nuevamente la contraseña"
