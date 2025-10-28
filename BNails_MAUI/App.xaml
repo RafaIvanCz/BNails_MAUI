@@ -12,7 +12,7 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <ResourceDictionary>
                     <converters:BoolToBrushConverter x:Key="BoolToBrushConverter"
-                                         ActiveBrush="DarkBlue"
+                                         ActiveBrush="#3a0ca3"
                                          UnenableBrush="Gray" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
