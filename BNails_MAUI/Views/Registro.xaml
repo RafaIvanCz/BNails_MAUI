@@ -9,45 +9,84 @@
              Title="Registro">
 
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#f8edeb" Offset="0.0" />
+                <GradientStop Color="#ffe5d9" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
 
         <ScrollView HorizontalOptions="Center">
 
             <VerticalStackLayout
-                Spacing="25"
+                Spacing="20"
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 Padding="30, 0"
-                WidthRequest="350">
+                WidthRequest="400">
+
+                <Image
+                    Source="logo_principal.png"
+                    WidthRequest="220"
+                    HeightRequest="220"
+                    Margin="0,-60,0,-40"
+                    HorizontalOptions="Center"/>
 
                 <Label
                     Text="Registrate"
-                    Margin="0,0,0,35"
+                    Margin="0,0,0,10"
                     Style="{StaticResource LabelHeaderInicio}" />
 
-                <Entry
-                    Placeholder="Ingresa tu nombre"
-                    PlaceholderColor="{StaticResource Gray900}"
-                    Text="{Binding Nombre}" />
+                <Border
+                    Style="{StaticResource MainBorder}">
 
-                <Entry
-                    Placeholder="Ingresa tu correo electrónico"
-                    PlaceholderColor="{StaticResource Gray900}"
-                    Keyboard="Email"
-                    Text="{Binding Email, Mode=TwoWay}" />
+                    <Grid ColumnDefinitions="10,*">
+                        <Entry Grid.Column="1"
+                            Placeholder="Ingresa tu nombre"
+                            TextColor="Black"
+                            BackgroundColor="Transparent"
+                            PlaceholderColor="{StaticResource Gray400}"
+                            Text="{Binding Nombre}" />
+                    </Grid>
+                </Border>
+
+                <Border
+                    Style="{StaticResource MainBorder}">
+
+                    <Grid ColumnDefinitions="10,*">
+                        <Entry Grid.Column="1"
+                            Placeholder="Ingresa tu correo electrónico"
+                            TextColor="Black"
+                            BackgroundColor="Transparent"
+                            Keyboard="Email"
+                            Margin="5,0,0,0"
+                            PlaceholderColor="{StaticResource Gray400}"
+                            Text="{Binding Email, Mode=TwoWay}"/>
+                    </Grid>
+                </Border>
 
                 <Label
                     Text="Formato correcto: 'ejemplo@mail.com'"
-                    TextColor="Red"
-                    Margin="0,-20,0,0"
+                    TextColor="#c1121f"
+                    Margin="0,-15,0,0"
                     IsVisible="{Binding MostrarFormatoEmail}" />
 
-                <Entry
-                    x:Name="txtPasswordRegistro"
-                    Placeholder="Ingresa la contraseña"
-                    PlaceholderColor="{StaticResource Gray900}"
-                    IsPassword="True"
-                    Text="{Binding Password}" />
-                
+                <Border
+                    Style="{StaticResource MainBorder}">
+
+                    <Grid ColumnDefinitions="10,*">
+                        <Entry Grid.Column="1"                               
+                            x:Name="txtPasswordRegistro"
+                            Placeholder="Ingresa la contraseña"
+                            IsPassword="True"
+                            TextColor="Black"
+                            BackgroundColor="Transparent"
+                            Margin="5,0,0,0"
+                            PlaceholderColor="{StaticResource Gray400}"
+                            Text="{Binding Password}" />
+                    </Grid>
+                </Border>
+
                 <StackLayout Margin="0,-20,0,0">
                     <Label
                         Text="❌ Mínimo 8 caracteres"
@@ -66,16 +105,25 @@
 
                 </StackLayout>
 
-                <Entry
-                    Placeholder="Ingresa nuevamente la contraseña"
-                    PlaceholderColor="{StaticResource Gray900}"
-                    x:Name="txtRePasswordRegistro"
-                    IsPassword="True"
-                    Text="{Binding RePassword}" />
+                <Border
+                    Style="{StaticResource MainBorder}">
+
+                    <Grid ColumnDefinitions="10,*">
+                        <Entry Grid.Column="1"
+                            x:Name="txtRePasswordRegistro"
+                            Placeholder="Ingresa nuevamente la contraseña"
+                            IsPassword="True"
+                            TextColor="Black"
+                            BackgroundColor="Transparent"
+                            Margin="5,0,0,0"
+                            PlaceholderColor="{StaticResource Gray400}"
+                            Text="{Binding RePassword}" />
+                    </Grid>
+                </Border>
 
                 <Label
                     Text="Las contraseñas deben ser iguales"
-                    TextColor="Red"
+                    TextColor="{StaticResource DarkRedColor}"
                     Margin="0,-20,0,0"
                     IsVisible="{Binding MostrarCoincidencia}" />
 
@@ -95,6 +143,7 @@
 
                     <CheckBox
                         x:Name="ShowPasswordCheckBox"
+                        Color="DarkBlue"
                         CheckedChanged="OnShowPasswordCheckBox_Registro"
                         VerticalOptions="Center"/>
 
@@ -102,8 +151,7 @@
 
                 <Button
                     Text="Crear usuario"
-                    BackgroundColor="DarkBlue"
-                    Margin="0,30"
+                    Margin="0,20"
                     Style="{ StaticResource BotonesInicio }"
                     Command="{Binding RegistrarCommand}" />
 

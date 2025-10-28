@@ -44,4 +44,26 @@ public partial class Login : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(Views.Main.HomePage));
     }
+
+    private void OnEntryFocused(object sender,FocusEventArgs e)
+    {
+        if(sender is Entry entry)
+        {
+            if(entry == txtPasswordLogin)
+                PasswordBorder.Stroke = Color.FromArgb("#7B1FA2");
+            else
+                EmailBorder.Stroke = Color.FromArgb("#7B1FA2");
+        }
+    }
+
+    private void OnEntryUnfocused(object sender,FocusEventArgs e)
+    {
+        if(sender is Entry entry)
+        {
+            if(entry == txtPasswordLogin)
+                PasswordBorder.Stroke = Color.FromArgb("#9C27B0");
+            else
+                EmailBorder.Stroke = Color.FromArgb("#9C27B0");
+        }
+    }
 }

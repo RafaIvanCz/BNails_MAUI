@@ -60,6 +60,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Icons\candado.png" />
+	  <None Remove="Resources\Icons\user1.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 		<PackageReference Include="FFImageLoading.Maui" Version="1.3.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
@@ -107,6 +112,12 @@
 	  <MauiXaml Update="Views\ValidarCodigo.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Icons\candado.png" />
+	  <MauiImage Include="Resources\Icons\correo.png" />
+	  <MauiImage Include="Resources\Icons\user1.png" />
 	</ItemGroup>
 
 </Project>
