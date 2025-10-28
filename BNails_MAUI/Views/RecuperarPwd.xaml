@@ -8,18 +8,33 @@
              Shell.NavBarIsVisible="False"
              Title="RecuperarPwd">
 
-    <Grid BackgroundColor="White">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#f8edeb" Offset="0.0" />
+                <GradientStop Color="#ffe5d9" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
 
         <ScrollView HorizontalOptions="Center">
 
             <VerticalStackLayout
-                Spacing="25"                                 
-                VerticalOptions="Center"                                 
-                HorizontalOptions="Center"                                 
-                Padding="30, 0">
+                Spacing="20"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Padding="30, 0"
+                WidthRequest="400">
+
+                <Image
+                    Source="logo_principal.png"
+                    WidthRequest="220"
+                    HeightRequest="220"
+                    Margin="0,-60,0,-40"
+                    HorizontalOptions="Center"/>
 
                 <Label 
                     Text="Recuperar contraseña"
+                    FontSize="30"
                     Margin="0,0,0,25"
                     Style="{ StaticResource LabelHeaderInicio }" />
 
@@ -31,27 +46,32 @@
                     Padding="18,0"
                     Margin="0,0,0,40"/>
 
-                <Entry 
-                    Placeholder="Ingresa tu correo"
-                    TextColor="Black"
-                    BackgroundColor="Red"
-                    PlaceholderColor="{ StaticResource Gray900 }"
-                    Keyboard="Email"
-                    Margin="0,10,0,0"
-                    Text="{Binding Email, Mode=TwoWay}"/>
+                <Border
+                    Style="{StaticResource MainBorder}">
+
+                    <Grid ColumnDefinitions="10,*">
+                        <Entry Grid.Column="1"
+                            Placeholder="Ingresa tu correo electrónico"
+                            TextColor="Black"
+                            BackgroundColor="Transparent"
+                            Keyboard="Email"
+                            Margin="5,0,0,0"
+                            PlaceholderColor="{StaticResource Gray400}"
+                            Text="{Binding Email, Mode=TwoWay}"/>
+                    </Grid>
+                </Border>
 
                 <Label
-                    Text="Formato correcto: 'ejemplo@mail.com'"
+                    Text="Formato correcto: 'ejemplo@email.com'"
                     TextColor="Red"
                     Margin="0,-20,0,0"
                     IsVisible="{Binding MostrarFormatoEmail}" />
 
-                <Button 
+                <Button
                     Text="Continuar"
-                    Margin="0,40,0,50"
-                    BackgroundColor="DarkBlue"
+                    Margin="0,40"
                     Style="{ StaticResource BotonesInicio }"
-                    Command="{ Binding RecuperarPwdCommand }"/>
+                    Command="{Binding RecuperarPwdCommand}" />
 
                 <Label
                     Text="Volver al Inicio de Sesión"
