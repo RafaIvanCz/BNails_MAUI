@@ -11,49 +11,40 @@ using System.Windows.Input;
 
 namespace BNails_MAUI.ViewModels
 {
+    [QueryProperty(nameof(Id),"id")]
+    [QueryProperty(nameof(Nombre),"nombre")]
     public class TipoTrabajosViewModel : BaseViewModel
     {
         private readonly IFotosTrabajosRepository _fotosRepository;
-        private readonly Usuario _usuarioActual;
-        private readonly int _tipoTrabajoId;
+
+        private int _id;
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                if(_id == value) return;
+                _id = value;
+                // cuando llega el parámetro, cargamos
+                if(_id > 0) CargarFotos();
+                OnPropertyChanged();
+            }
+        }
+
+        public string Nombre { get; set; } = string.Empty;
 
         public ObservableCollection<FotoTrabajo> Fotos { get; } = new();
-        public bool IsAdmin => _usuarioActual.Email == "ivancho.ugbs@gmail.com"; // ajustar según tu lógica
-        public ICommand SubirFotoCommand { get; }
 
-        public TipoTrabajosViewModel(int tipoTrabajoId)
+        public TipoTrabajosViewModel(IFotosTrabajosRepository fotosRepository)
         {
-            _fotosRepository = ServiceHelper.GetService<IFotosTrabajosRepository>();
-            _tipoTrabajoId = tipoTrabajoId;
-
-            SubirFotoCommand = new Command(async () => await SubirFoto());
-            CargarFotos();
+            _fotosRepository = fotosRepository;
         }
 
         private void CargarFotos()
         {
-            var fotos = _fotosRepository.ObtenerFotosPorTipoTrabajo(_tipoTrabajoId);
             Fotos.Clear();
-
-            foreach(var foto in fotos)
-                Fotos.Add(foto);
-        }
-
-        private async Task SubirFoto()
-        {
-            var file = await FilePicker.PickAsync(new PickOptions { PickerTitle = "Selecciona una foto" });
-            if(file != null)
-            {
-                var nuevaFoto = new FotoTrabajo
-                {
-                    TipoTrabajoId = _tipoTrabajoId,
-                    RutaImagen = file.FullPath,
-                    Descripcion = "Nueva foto"
-                };
-
-                if(_fotosRepository.AgregarFotoTrabajo(nuevaFoto))
-                    Fotos.Add(nuevaFoto);
-            }
+            var fotos = _fotosRepository.ObtenerFotosPorTipoTrabajo(Id);
+            foreach(var f in fotos) Fotos.Add(f);
         }
     }
 }

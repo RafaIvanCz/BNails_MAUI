@@ -14,12 +14,12 @@ namespace BNails_MAUI.Views.Main
             BindingContext = viewModel;
         }
 
-        private async void OnTipoTrabajoSeleccionado(object sender,SelectionChangedEventArgs e)
-        {
-            if(e.CurrentSelection.FirstOrDefault() is TipoTrabajo tipo)
-            {
-                await Navigation.PushAsync(new TipoTrabajoPage(tipo.Id));
-            }
-        }
+        //private async void OnTipoTrabajoSeleccionado(object sender,SelectionChangedEventArgs e)
+        //{
+        //    if(e.CurrentSelection.FirstOrDefault() is TipoTrabajo tipo)
+        //    {
+        //        await Navigation.PushAsync(new TipoTrabajoPage(tipo.Id));
+        //    }
+        //}
     }
 }
