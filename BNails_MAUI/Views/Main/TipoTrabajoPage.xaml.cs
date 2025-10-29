@@ -4,11 +4,10 @@ namespace BNails_MAUI.Views.Main
 {
     public partial class TipoTrabajoPage : ContentPage
     {
-        private int _tipoTrabajoId;
-        public TipoTrabajoPage(int tipoTrabajoId)
+        public TipoTrabajoPage(TipoTrabajosViewModel tipoTrabajoVM)
         {
             InitializeComponent();
-            BindingContext = new TipoTrabajosViewModel(tipoTrabajoId);
+            BindingContext = tipoTrabajoVM;
         }
     }
 }
