@@ -121,6 +121,34 @@
                     </Grid>
                 </Border>
 
+                <Border
+                    Style="{StaticResource MainBorder}">
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Picker
+                            x:Name="txtRol"
+                            Grid.Column="0"
+                            Title="Selecciona tu Rol"
+                            TitleColor="{StaticResource Gray400}"
+                            TextColor="Black"
+                            BackgroundColor="Transparent"
+                            Margin="5,0,0,0"
+                            ItemsSource="{Binding RolesDisponibles}"
+                            SelectedItem="{Binding RolSeleccionado}"
+                            ItemDisplayBinding="{Binding .}"/>
+
+
+                        <Image
+                            Grid.Column="1"
+                            Source="drop_down_selector.png"
+                            WidthRequest="20"
+                            HeightRequest="20"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"
+                            Margin="0,0,20,0"/>
+                    </Grid>
+                </Border>
+
                 <Label
                     Text="Las contraseñas deben ser iguales"
                     TextColor="{StaticResource DarkRedColor}"

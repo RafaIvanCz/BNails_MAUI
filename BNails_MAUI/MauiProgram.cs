@@ -33,8 +33,7 @@ namespace BNails_MAUI
             builder.Services.AddTransient<Views.Main.HomePage>();
             builder.Services.AddTransient<ViewModels.TipoTrabajosViewModel>();
             builder.Services.AddTransient<Views.Main.TipoTrabajoPage>();
-
-
+            builder.Services.AddTransient<IUsuarioService,UsuarioService>();
 
             builder.Services.AddSingleton<App>();
 
