@@ -1,4 +1,5 @@
-﻿using BNails_MAUI.Models;
+﻿using BNails_MAUI.Interfaces.Services;
+using BNails_MAUI.Models;
 using BNails_MAUI.Repositories;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BNails_MAUI.Services
 {
-    public class UsuarioService
+    public class UsuarioService : IUsuarioService
     {
         private readonly UsuarioRepository _usuarioRepository;
 

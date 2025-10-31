@@ -20,7 +20,29 @@ namespace BNails_MAUI.ViewModels
 
         private readonly IDialogService _dialogService;
         private readonly IUsuarioRepository _usuarioRepository;
-        private readonly UsuarioService _usuarioService;
+        private readonly IUsuarioService _usuarioService;
+
+        private List<string?> _rolesDisponibles;
+        public List<string?> RolesDisponibles
+        {
+            get => _rolesDisponibles;
+            set
+            {
+                _rolesDisponibles = value;
+                OnPropertyChanged(nameof(RolesDisponibles));
+            }
+        }
+
+        private string? _rolSeleccionado;
+        public string? RolSeleccionado
+        {
+            get => _rolSeleccionado;
+            set
+            {
+                _rolSeleccionado = value;
+                OnPropertyChanged(nameof(RolSeleccionado));
+            }
+        }
 
         private string? nombre;
         private string? email;
@@ -239,11 +261,13 @@ namespace BNails_MAUI.ViewModels
 
         public ICommand? RegistrarCommand { get; }
 
-        public RegistroViewModel(IDialogService dialogService, IUsuarioRepository usuarioRepository, UsuarioService usuarioService)
+        public RegistroViewModel(IDialogService dialogService, IUsuarioRepository usuarioRepository, IUsuarioService usuarioService)
         {
             this._dialogService = dialogService;
             _usuarioRepository = usuarioRepository;
             _usuarioService = usuarioService;
+
+            RolesDisponibles = new List<string?> { "Manicura","Cliente" };
 
             RegistrarCommand = new Command(OnRegistrar);
         }
@@ -296,7 +320,7 @@ namespace BNails_MAUI.ViewModels
                 };
 
                 var usuarioService = new UsuarioService();
-                bool registroExitoso = usuarioService.RegistrarUsuario(usuario);
+                bool registroExitoso = _usuarioService.RegistrarUsuario(usuario);
 
                 if (registroExitoso)
                 {
@@ -308,7 +332,7 @@ namespace BNails_MAUI.ViewModels
                 }
             }finally
             {
-                IsCargando = true;
+                IsCargando = false;
             }
 
         }
